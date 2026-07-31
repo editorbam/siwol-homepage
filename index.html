@@ -151,14 +151,16 @@
     mix-blend-mode: lighten;
   }
   #inkTint > * { position: absolute; color: #d9cdb4; }   /* 파스텔 베이지 — 사본 공통 */
-  #inkTint .logo-copy {
-    font-family: 'Archivo', 'Noto Sans KR', sans-serif;
+  /* 타이포 스펙 = 원본과 잉크 사본이 한 규칙을 공유(7/31 리뷰 반영) — 두 벌 수동 동기가
+     어긋나면 리빌 때 유령 이중상이 된다. 텍스트도 로드 시 원본에서 복제한다(스크립트) */
+  .field .hero-logo, #inkTint .logo-copy {
+    font-family: 'Archivo', 'Noto Sans KR', sans-serif;   /* 영문=Archivo, 10月=Noto Sans 900 폴백 */
     font-weight: 900; font-stretch: 120%;
     font-size: clamp(40px, 7.5vw, 120px);
     letter-spacing: -0.02em; line-height: .9;
-    text-align: center;
   }
-  #inkTint .word-copy {                        /* 코너 워드(design/interior) 스펙과 동일 */
+  #inkTint .logo-copy { text-align: center; }
+  .field .hero-word, #inkTint .word-copy {     /* 코너 워드(design/interior)와 사본 */
     font-family: var(--en);
     font-weight: 900; font-stretch: 125%;
     font-size: clamp(44px, 10vw, 180px);
@@ -180,7 +182,7 @@
     mask-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0));
   }
   #maniTint .label { margin-bottom: 4vh; opacity: .75; }
-  #maniTint p {
+  #maniTint p, .stage .mani p {              /* 원본·감빛 사본이 한 규칙 공유(7/31) */
     font-family: var(--display);
     font-size: clamp(30px, 4.8vw, 62px);
     font-weight: 700; line-height: 1.5;
@@ -199,9 +201,9 @@
     -webkit-mask-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0));
     mask-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0));
   }
-  /* 잉크 없는 환경 = "흰 글자가 먹으로 드러나는" 기제도 없다 → 스톤 위 먹 글씨로 처음부터 완성태
-     (로고=먹색·DIRECTOR 사진=온전히 와 같은 원칙) */
-  html.no-ink .stage .mani { color: var(--ink); }
+  /* 매니페스토 글자색(7/31 리뷰 반영): 일괄 먹색 규칙(html.no-ink)은 모바일의 어두운 통과 구간에서
+     저대비였다 → 터치 환경은 JS(heroUpdate)가 배경 밝기에 맞춰 흰→먹으로 보간.
+     정적 강등(모션감소)은 아래 reduced 미디어쿼리가 먹색을 지정한다 */
   /* 도록 화이트 히어로 — 정중앙 대형 로고 타이포 (cap-a-white 이식, 글리치 없음) */
   .field { display: grid; place-items: center; }
   .field .hero-center {
@@ -215,12 +217,8 @@
     to   { opacity: 1; }
   }
   .field .hero-logo {
-    font-family: 'Archivo', 'Noto Sans KR', sans-serif;   /* 영문=Archivo, 10月=Noto Sans 900 폴백 */
-    font-weight: 900; font-stretch: 120%;
-    font-size: clamp(40px, 7.5vw, 120px);
-    letter-spacing: -0.02em; line-height: .9;
     color: #dcd8cf;                       /* 코너 워드와 동일한 웜그레이 — 먹이 지나가면 역상으로 드러난다 */
-    user-select: none;
+    user-select: none;                    /* 폰트 스펙은 위 공유 규칙(#inkTint .logo-copy와 한 벌) */
   }
   /* 스크롤 중 키워드 정지는 JS(rAF 쓰기 게이트)가 담당 — .scrolled면 transform 갱신을 멈춘다 */
   /* 눈금자 — 사이트 전체 고정 프레임. 잉크 캔버스와 같은 중간 회색+difference 그룹 블렌드
@@ -242,13 +240,7 @@
   .field .hero-word {
     position: absolute; z-index: 1;
     pointer-events: none; user-select: none;
-    font-family: var(--en);
-    font-weight: 900;
-    font-stretch: 125%;
-    font-size: clamp(44px, 10vw, 180px);
-    line-height: .78;
-    letter-spacing: -0.035em;
-    color: #dcd8cf;                      /* 종이보다 살짝 진한 웜그레이 — 고스트 레이어 */
+    color: #dcd8cf;                      /* 종이보다 살짝 진한 웜그레이 — 고스트 레이어. 폰트 스펙=공유 규칙 */
     opacity: 0;
     clip-path: inset(0 100% 0 0);        /* 왼쪽만 남기고 가림 → 오른쪽으로 열린다 */
   }
@@ -277,17 +269,8 @@
     font-size: 10px; letter-spacing: .4em; opacity: .6;
     mix-blend-mode: difference; color: #fff;   /* interior 워드 위에 올라가도 읽히게 */
   }
-  /* 타이포 등장: 입장 후 페이드 인 (글리치와 transform 충돌 방지용 래퍼) */
-  .field .rise {
-    position: absolute;
-    left: 24px; bottom: 3vh;
-    z-index: 2;
-    pointer-events: none;
-    opacity: 0; transform: translateY(30px);
-    transition: opacity 1.4s ease .25s, transform 1.4s cubic-bezier(.22,1,.36,1) .25s;
-  }
-  .field .rise.on { opacity: 1; transform: none; }
-  /* C안 글리치(슬라이스·조인트) 전체 제거 — 7/9 사용자 결정. 잉크가 유일한 킥 */
+  /* C안 글리치(슬라이스·조인트) 전체 제거 — 7/9 사용자 결정. 잉크가 유일한 킥.
+     .rise(타이포 등장 래퍼)도 7/31 정리 — 대응 마크업(#heroRise)이 없는 죽은 코드였다 */
 
   /* ═══ 0+1막 병합: 히어로 → 로고의 10月이 창이 되어 확대 통과 → 영상 → 매니페스토 ═══ */
   .stage { height: 520vh; position: relative; background: var(--paper); }
@@ -297,7 +280,7 @@
     overflow: hidden;
     background: var(--paper);
   }
-  .window { position: absolute; inset: 0; z-index: 1; opacity: 0; will-change: opacity; }
+  .window { position: absolute; inset: 0; z-index: 1; opacity: 0; will-change: opacity, filter; }
   /* 창 속 = 차콜로 시작(글자가 덮개 위에서 읽히려면 대비 필수 — 덮개와 같은 색이면 글자가 사라진다),
      통과가 끝나면 JS가 스톤 그레이(#d8d4ca)로 밝힌다: 어둠을 지나 도록의 다음 페이지로.
      계단: 종이 → 스톤(덮개) → 차콜(통과) → 스톤(공간) → 먹(선언). 매니페스토 = 스톤 위 먹 글씨.
@@ -317,11 +300,7 @@
     pointer-events: none;
   }
   .stage .mani .label { margin-bottom: 4vh; opacity: .75; }
-  .stage .mani p {
-    font-family: var(--display);
-    font-size: clamp(30px, 4.8vw, 62px);
-    font-weight: 700; line-height: 1.5;
-  }
+  /* .stage .mani p 폰트 스펙 = #maniTint p와 공유 규칙(위) */
 
   .hint {
     position: absolute; bottom: 34px; left: 50%; z-index: 4;
@@ -342,17 +321,6 @@
     55% { transform: scaleY(1); transform-origin: bottom; }
     100% { transform: scaleY(0); transform-origin: bottom; }
   }
-
-  .caption {
-    position: absolute; left: 28px; bottom: 30px;
-    color: #fff; opacity: 0;
-    transform: translateY(14px);
-    transition: opacity .7s ease, transform .7s ease;
-    text-shadow: 0 1px 18px rgba(0,0,0,.45);
-  }
-  .caption.on { opacity: 1; transform: none; }
-  .caption .cat { font-family: var(--en); font-size: 11px; letter-spacing: .3em; opacity: .8; }
-  .caption .name { font-family: var(--display); font-size: 21px; font-weight: 700; margin-top: 8px; letter-spacing: .02em; }
 
   /* ═══ 2막: 선언 (종이 — 7/14 전체 밝은 톤 통일) — 스테이지 매니페스토(중앙·시)와 형식을 가른다: 좌측 정렬·본문의 자세(태도) */
   .manifesto {
@@ -391,31 +359,8 @@
     padding: 2vh 24px 7vh;
     line-height: 1;
   }
-  .work ol { list-style: none; }
-  .work li {
-    position: relative;
-    border-top: 1px solid rgba(18,17,16,.18);
-    overflow: hidden;
-  }
-  .work li:last-child { border-bottom: 1px solid rgba(18,17,16,.18); }
-  .work a.row {
-    display: grid;
-    grid-template-columns: 150px 1fr 90px;
-    align-items: baseline; gap: 20px;
-    padding: 5.2vh 28px;
-    color: inherit; text-decoration: none;
-    transition: opacity .25s;
-  }
-  .work .cat { font-family: var(--en); font-size: 11.5px; letter-spacing: .22em; opacity: .5; }
-  .work .name {
-    font-family: var(--display);          /* 모두체 — 마퀴·2막 선언과 통일 (7/9, Noto Sans에서 교체) */
-    font-size: clamp(26px, 4.2vw, 56px);
-    font-weight: 700; letter-spacing: -0.01em;
-    text-align: center;
-    word-break: keep-all;                 /* "마스타 하이볼"이 글자 단위로 쪼개지지 않게 */
-    transition: opacity .3s;
-  }
-  .work .year { font-family: var(--en); font-size: 11.5px; letter-spacing: .22em; opacity: .5; text-align: right; }
+  /* 옛 Works 타이포 리스트(ol/li/a.row) CSS·JS는 7/31 정리 — "스크롤 도록"으로 전면 개편(7/10)된 뒤
+     남은 잔재가 도록 캡션(.cap .name)에 몰래 캐스케이드되고 있었다. 필요한 속성은 .gallery .cap으로 이관 */
 
   /* 스크롤 도록 — 사진이 프로젝트의 본체. 스크롤이 도판을 넘긴다 (호버 마퀴 폐기 7/10)
      구조: .gallery 높이 = 도판 수 × 100vh(JS), 안의 .gstage가 화면에 붙어 도판을 크로스페이드 */
@@ -448,16 +393,16 @@
   }
   .gallery .cap .name {
     font-family: var(--display);
-    font-size: clamp(28px, 3.8vw, 52px);
+    /* 최소 28→29px(7/31): 모두체가 28px+dpr2 특정 조합에서 획이 옆으로 번져
+       취소선처럼 그려지는 래스터 버그(390 화면 캡션에서 실측) — 29px은 깨끗하다 */
+    font-size: clamp(29px, 3.8vw, 52px);
     font-weight: 700; letter-spacing: -0.01em;
+    text-align: center;                   /* 옛 .work .name에서 이관(7/31) — 삭제 전 렌더 유지 */
     word-break: keep-all;
     margin-top: 12px;
   }
   .gallery .cap .r { text-align: right; }
   .gallery .cap .idx { display: block; margin-top: 12px; font-variant-numeric: tabular-nums; }
-
-  /* 도판 없는 현장 — 도록 뒤의 얇은 색인 */
-  .work .more { padding: 10vh 28px 3vh; }
 
   /* ═══ 4막: 일하는 방식 (종이 · 정지) ═══ */
   .process {
@@ -582,15 +527,16 @@
   /* ── 모바일 ─────────────────────────────────── */
   @media (max-width: 760px) {
     header nav a { margin-left: 16px; }
-    .work a.row { grid-template-columns: 1fr; gap: 8px; padding: 4.2vh 22px; }   /* .row까지 써야 데스크톱 3열 규칙을 이긴다 */
-    .work .name { text-align: left; }
-    .work .year { text-align: left; }
+    /* 히어로 하단 메타 — 3항목·자간 .4em은 좁은 화면에서 두 줄로 감겨 코너 워드·힌트와 뒤엉킨다(7/31)
+       → 가운데 항목(INTERIOR ATELIER)을 접고 양끝 두 항목만 한 줄로 */
+    .field .hero-year { padding: 0 22px; font-size: 9px; letter-spacing: .22em; }
+    .field .hero-year span:nth-child(2) { display: none; }
     /* 도록 — 좁은 화면은 도판을 좌우 끝까지, 라벨은 세로로 쌓는다 */
     .gallery .plate { left: 0; right: 0; top: 8vh; bottom: 25vh; }
     .gallery .cap { left: 22px; right: 22px; bottom: 7vh; flex-direction: column; align-items: flex-start; gap: 14px; }
+    .gallery .cap .name { text-align: left; }   /* 옛 .work .name 모바일 규칙에서 이관(7/31) */
     .gallery .cap .r { display: flex; gap: 20px; align-items: baseline; text-align: left; }
     .gallery .cap .idx { margin-top: 0; }
-    .preview { display: none; }
     .process .row { grid-template-columns: 1fr; gap: 52px; }
     .director .inner { grid-template-columns: 1fr; }
     .director .media { max-width: 340px; }
@@ -603,13 +549,12 @@
   /* ── 접근성 강등 ────────────────────────────── */
   @media (prefers-reduced-motion: reduce) {
     #intro { display: none; }
-    .field .rise { opacity: 1; transform: none; transition: none; }
     .field .hero-center { animation: none; opacity: 1; }
     .field .hero-word { animation: none; opacity: 1; clip-path: none; }
     .stage { height: auto; }
     .stage .pin { position: relative; height: auto; }
     /* 연출이 꺼진 환경 = 창 통과가 없다 → 히어로 한 화면 + 매니페스토를 스톤 배경의
-       일반 블록으로 이어 붙인다 (겹침 해제). 글자색은 no-ink 규칙이 먹색으로 바꾼다 */
+       일반 블록으로 이어 붙인다 (겹침 해제). 정적 강등 = 스톤 위 먹 글씨 */
     .field { position: relative; height: 100vh; }
     .window, .hint { display: none; }
     .stage .mani {
@@ -618,12 +563,11 @@
       min-height: 70vh;
       padding: 16vh 8vw;
       background: #d8d4ca;
+      color: var(--ink);
     }
-    .photo { transform: none; }
     .hint::after { animation: none; }
     .manifesto .w { opacity: 1; }
     .reveal { opacity: 1; transform: none; }
-    .preview { display: none; }
     /* 도록 — 연출이 꺼진 환경은 핀 없이 도판을 차례로 쌓는다 (JS 갱신 없음 → CSS가 켠다) */
     .gallery { height: auto; }
     .gallery .gstage { position: relative; height: auto; }
@@ -663,17 +607,15 @@
   <div class="rmark rmark-x" id="rmarkX"><span class="rread" id="rreadX"></span></div>
   <div class="rmark rmark-y" id="rmarkY"><span class="rread" id="rreadY"></span></div>
 </div>
-<!-- 잉크 틴트 — 히어로 타이포(로고+코너 워드)를 캔버스 위에 한 벌 더: 먹이 지날 때만 베이지로 드러난다 -->
+<!-- 잉크 틴트 — 히어로 타이포(로고+코너 워드)를 캔버스 위에 한 벌 더: 먹이 지날 때만 베이지로 드러난다.
+     사본 텍스트는 비워둔다 — 로드 시 JS가 원본(data-tint 대상)에서 복제(7/31, 두 벌 수동 동기 폐지) -->
 <div id="inkTint" aria-hidden="true">
-  <h1 class="logo-copy" data-tint=".hero-logo">SIWOL<br>10月</h1>
-  <div class="word-copy" data-tint=".hero-word.tl">design</div>
-  <div class="word-copy" data-tint=".hero-word.br">interior</div>
+  <h1 class="logo-copy" data-tint=".hero-logo"></h1>
+  <div class="word-copy" data-tint=".hero-word.tl"></div>
+  <div class="word-copy" data-tint=".hero-word.br"></div>
 </div>
-<!-- 매니페스토 잉크 틴트 — 잉크 방울 자리만 마스크로 열리는 감빛 사본 (카피는 stageMani와 동일하게 유지) -->
-<div id="maniTint" data-ink-tint aria-hidden="true">
-  <div class="label">SIWOL — 10月</div>
-  <p>일 년 중 가장 좋은 계절, 10월.<br>그 온도로 머무는 공간을 짓습니다.</p>
-</div>
+<!-- 매니페스토 잉크 틴트 — 잉크 방울 자리만 마스크로 열리는 감빛 사본. 내용=JS가 stageMani에서 복제 -->
+<div id="maniTint" data-ink-tint aria-hidden="true"></div>
 
 <!-- ═══ 0+1막 병합: 도록 히어로 → 로고의 10月이 커지며 창이 된다 → 영상 → 매니페스토 ═══ -->
 <section class="stage" id="stage">
@@ -821,7 +763,7 @@
 
 <!-- ═══ 6막: CONTACT ═══ -->
 <section class="contact" id="contact">
-  <h2>같이<br>짓죠.<span class="tint" data-ink-tint aria-hidden="true">같이<br>짓죠.</span></h2>
+  <h2>같이<br>짓죠.<span class="tint" data-ink-tint aria-hidden="true"></span></h2><!-- 틴트 내용=JS가 h2에서 복제 -->
   <p class="sub">공사 규모와 일정만 알려주셔도 됩니다. 하루 안에 답합니다.</p>
   <div class="btns">
     <a class="btn" href="tel:01080829592">전화하기</a>
@@ -859,21 +801,35 @@
 
 <script>
 (function () {
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  /* 잉크 커서가 없는 환경(터치·모션감소) = "먹이 지나가야 드러난다" 기제 자체가 없음
-     → 로고를 처음부터 먹색으로. 잉크 캔버스 제거 조건(reduced||coarse)과 동일해야 한다 */
-  const noInk = reduced || window.matchMedia('(pointer: coarse)').matches;
+  /* ── 환경 게이트(단일 출처, 7/31) — 여기서 한 번만 판정해 html 클래스로 찍는다.
+     뒤의 앰비언트·잉크 스크립트는 이 클래스를 읽는다(각자 재판정 금지 — 조건이 어긋나면
+     로고가 오지 않을 리빌을 기다리며 웜그레이로 남는다) */
+  const rmQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const reduced = rmQuery.matches;
+  const coarse = window.matchMedia('(pointer: coarse)').matches;
+  /* 잉크 커서가 없는 환경(터치·모션감소) = "먹이 지나가야 드러난다" 기제 자체가 없음 → 로고를 처음부터 먹색으로 */
+  const noInk = reduced || coarse;
   if (noInk) document.documentElement.classList.add('no-ink');
   /* 터치 = 커서 리빌은 없지만(no-ink 완성태 유지) 잉크 자체는 산다 — 물드는 모드 */
-  if (!reduced && window.matchMedia('(pointer: coarse)').matches) {
-    document.documentElement.classList.add('touch-ink');
-  }
+  if (!reduced && coarse) document.documentElement.classList.add('touch-ink');
+  /* 열람 중 모션감소를 켜고 끄면 CSS는 즉시 정적 레이아웃으로 바뀌는데 JS가 심어둔
+     인라인 스타일(매니 opacity 0·도판 hidden·도록 700vh 높이)은 남아 빈 화면이 된다
+     → 상태를 하나하나 되감는 대신 리로드로 전체 재초기화(스크롤 위치는 브라우저가 복원) */
+  if (rmQuery.addEventListener) rmQuery.addEventListener('change', () => location.reload());
+
+  /* ── iOS 주소창 대응(7/31): CSS vh는 큰 뷰포트에 고정인데 window.innerHeight는 주소창을
+     따라 변한다 — 섹션 높이(vh)와 진행도 분모(innerHeight)가 어긋나 스크롤 중 연출이 점프.
+     100vh 실측 프로브로 CSS와 같은 기준을 쓴다(주소창이 접혀도 값이 안 흔들린다) */
+  const vhProbe = document.createElement('div');
+  vhProbe.style.cssText = 'position:fixed;top:0;left:0;height:100vh;width:0;pointer-events:none;visibility:hidden;';
+  document.body.appendChild(vhProbe);
+  let vhBase = vhProbe.offsetHeight || window.innerHeight;
+  window.addEventListener('resize', () => { vhBase = vhProbe.offsetHeight || window.innerHeight; });
 
   /* ══ INTRO — C안 라인플로우 이식: 10겹 사각 레일을 타는 SIWOL · 10月 ══ */
   (function () {
     const intro = document.getElementById('intro');
-    const rise = document.getElementById('heroRise');
-    if (reduced) { rise && rise.classList.add('on'); return; }
+    if (reduced) return;
 
     const tunnel = document.getElementById('tunnel');
     const WORD = 'SIWOL · 10月 · ';
@@ -944,7 +900,6 @@
     function enter() {
       if (entered) return; entered = true;
       intro.classList.add('done');
-      rise && rise.classList.add('on');
       document.getElementById('field').classList.add('in');   /* 코너 워드 좌→우 리빌 시작 */
       setTimeout(() => intro.remove(), 1000);
     }
@@ -993,19 +948,45 @@
     document.querySelector('.hero-logo .l1'),
   ].filter(Boolean);   /* 잉크 캔버스는 제외 — 사이트 전체의 킥으로 항상 산다 */
 
-  /* 코너 워드 리빌(fill:forwards)이 끝나면 애니메이션을 걷어내 — 스크롤 페이드(인라인 opacity)가 먹도록 */
-  document.querySelectorAll('.hero-word').forEach(el => {
-    el.addEventListener('animationend', () => {
-      el.style.animation = 'none'; el.style.opacity = '1'; el.style.clipPath = 'none';
-    });
+  /* 코너 워드 리빌(fill:forwards)이 끝나면 애니메이션을 걷어내 — 스크롤 페이드(인라인 opacity)가 먹도록.
+     7/31 수정: opacity '1' 강제는 입장 직후 바로 스크롤한 경우 진행 중이던 페이드를 되돌려
+     워드가 줌 연출 위로 불쑥 겹치던 원인 → 걷어낸 직후 heroUpdate()로 스크롤 값 재적용.
+     리빌 도중 스크롤이 시작되면(페이드 f>0) 애니메이션을 즉시 끊는다(진행 중엔 인라인 쓰기가 무시되므로) */
+  const heroWords = [...document.querySelectorAll('.hero-word')];
+  let wordsCleared = false;
+  const clearWordAnim = el => { el.style.animation = 'none'; el.style.clipPath = 'none'; };
+  heroWords.forEach(el => {
+    el.addEventListener('animationend', () => { clearWordAnim(el); heroUpdate(); });
   });
 
   /* 마스크 10月 = 히어로 로고의 10月과 같은 크기·같은 자리 (스위치 순간이 이어지도록) */
   const inkTint = document.getElementById('inkTint');
-  let baseFs = 100, glyphCx = 0, glyphCy = 0;
+
+  /* 사본 텍스트 = 원본에서 로드 시 복제(7/31 리뷰 반영) — 카피는 원본 한 곳만 고치면 된다.
+     잉크 사본은 원본의 id(heroWol)가 딸려오지 않게 걷어낸다 */
+  if (inkTint) inkTint.querySelectorAll('[data-tint]').forEach(el => {
+    const src = document.querySelector(el.dataset.tint);
+    if (!src) return;
+    const c = src.cloneNode(true);
+    c.querySelectorAll('[id]').forEach(n => n.removeAttribute('id'));
+    el.innerHTML = c.innerHTML;
+  });
+  const maniTintNode = document.getElementById('maniTint');
+  if (maniTintNode && mani) maniTintNode.innerHTML = mani.innerHTML;
+  const contactH2 = document.querySelector('.contact h2');
+  const contactTint = contactH2 && contactH2.querySelector('.tint');
+  if (contactTint) {
+    const c = contactH2.cloneNode(true);
+    const ct = c.querySelector('.tint');
+    if (ct) ct.remove();
+    contactTint.innerHTML = c.innerHTML;
+  }
+
+  let baseFs = 100, glyphCx = 0, glyphCy = 0, lastSyncTop = -1e9;
   function syncMask() {
     const r = heroWol.getBoundingClientRect();
     const fr = fieldEl.getBoundingClientRect();
+    lastSyncTop = r.top;   /* 정합 시점의 로고 위치 — 어긋나면 heroUpdate가 재정합(7/31) */
     glyphCx = r.left - fr.left + r.width / 2;
     glyphCy = r.top - fr.top + r.height / 2;
     baseFs = parseFloat(getComputedStyle(heroWol).fontSize);
@@ -1042,7 +1023,7 @@
 
   function heroUpdate() {
     if (reduced) return;
-    const vh = window.innerHeight;
+    const vh = vhBase;   /* innerHeight 아님 — iOS 주소창 접힘에 흔들리지 않는 CSS vh 기준(7/31) */
     const rect = stage.getBoundingClientRect();
     /* 스테이지를 완전히 지나면 이 함수는 쉰다 — 지나간 뒤에도 매 스크롤 프레임마다
        블러·그라디언트 등 십수 개 스타일을 다시 쓰던 것이 끊김의 주범 중 하나(7/10).
@@ -1056,8 +1037,18 @@
     /* 스위치가 끝나면 히어로 오버레이 전체를 페인트에서 제외 — 줌 구간 프레임 확보 */
     fieldEl.style.visibility = p > 0.24 ? 'hidden' : '';
 
-    /* 0.06 ~ 0.16: 히어로 부속이 걷힌다 — 키워드·코너 워드·SIWOL 줄·메타 */
+    /* 정합 어긋남 방어(7/31): 페이지 중간에서 새로고침·리사이즈되면 syncMask가 화면 밖으로
+       밀려난 히어로 좌표를 캡처한 채 굳는다 → 히어로가 다시 보일 때 로고 위치가 기억과 다르면 재정합 */
+    if (p <= 0.24) {
+      const wt = heroWol.getBoundingClientRect().top;
+      if (Math.abs(wt - lastSyncTop) > 1) syncMask();
+    }
+
+    /* 0.06 ~ 0.16: 히어로 부속이 걷힌다 — 키워드·코너 워드·SIWOL 줄·메타.
+       코너 워드 리빌 애니메이션이 아직 돌고 있으면 끊는다 — CSS 애니메이션이 도는 동안엔
+       아래 인라인 opacity가 무시된다(7/31) */
     const f = clamp01((p - 0.06) / 0.10);
+    if (f > 0 && !wordsCleared) { wordsCleared = true; heroWords.forEach(clearWordAnim); }
     fadeEls.forEach(el => { el.style.opacity = String(1 - f); });
     /* 히어로 쪽 잉크 틴트(로고·코너 워드)도 함께 걷는다 — 매니페스토 사본은 별도 스케줄 */
     inkTintCopies.forEach(el => {
@@ -1098,9 +1089,21 @@
     cover.style.transformOrigin = glyphCx + 'px ' + glyphCy + 'px';   /* 로고 10月 중심을 통과 */
     cover.style.opacity = z > 0.82 ? String(clamp01(1 - (z - 0.82) / 0.18)) : '1';
 
-    /* 0.30 ~ 0.48: 커지는 글자가 그대로 블러 백드롭이 된다 (별도 빈 장면 없음) */
+    /* 0.30 ~ 0.48: 커지는 글자가 그대로 블러 백드롭이 된다 (별도 빈 장면 없음).
+       버벅임 수정(7/29): 이 구간에서만 최악 116ms 튐 — 화면 전체 창에 22px 블러를 켜는
+       첫 프레임에 큰 블러 텍스처를 새로 할당하던 것이 원인. ①줌 초입(0.22~)에 미세 블러로
+       필터 레이어를 미리 데워 콜드 할당을 없애고 ②최대 22→14px로 비용을 낮추고
+       ③정수 px로 스냅해 값이 바뀔 때만 다시 써서 매 프레임 재래스터화를 막는다. */
     const bl = clamp01((p - 0.30) / 0.18);
-    winEl.style.filter = bl > 0 ? 'blur(' + (bl * 22) + 'px)' : '';
+    /* 통과 구간(p<0.60) 내내 눈에 안 보이는 미세 블러를 유지 = 필터 레이어를 상시 살려둔다.
+       레이어 할당(콜드 스타트)은 스테이지 진입 직후 아직 안 움직일 때(p≈0) 한 번 일어나
+       스크롤 중엔 재할당이 없다 — 이게 30~48% 구간 튐의 실제 해법이었다. */
+    const warm = p < 0.60;
+    const blPx = bl > 0 ? Math.max(1, Math.round(bl * 14)) : (warm ? 0.001 : 0);
+    if (blPx !== winEl._bl) {
+      winEl._bl = blPx;
+      winEl.style.filter = blPx ? 'blur(' + blPx + 'px)' : '';
+    }
 
     /* 0.32 ~ 0.46: 차콜 → 스톤으로 밝아지며 카피가 읽힐 바탕을 만든다 */
     const lt = clamp01((p - 0.32) / 0.14);
@@ -1111,6 +1114,17 @@
     const m = clamp01((p - 0.36) / 0.14);
     mani.style.opacity = m;
     mani.style.transform = 'translateY(' + (26 * (1 - m)) + 'px)';
+    /* 모바일(터치): 흰 글자로 시작해 배경이 스톤으로 밝아지는 데 맞춰 먹색으로 보간(7/31) —
+       예전 일괄 먹색 규칙은 아직 어두운 통과 구간(p≈0.38~0.42)에서 글자가 씻겨 보였다.
+       최종 정지 상태는 먹색 = 스톤 위 저대비 문제(7/10)도 그대로 해결 유지 */
+    if (noInk) {
+      const cm = Math.round(clamp01((lt - 0.45) / 0.35) * 40) / 40;
+      if (cm !== mani._cm) {
+        mani._cm = cm;
+        const mc = (a, b) => Math.round(a + (b - a) * cm);
+        mani.style.color = 'rgba(' + mc(255, 18) + ',' + mc(255, 17) + ',' + mc(255, 16) + ',' + (0.95 + 0.05 * cm).toFixed(3) + ')';
+      }
+    }
     /* 매니페스토 잉크 틴트(감빛 사본) = 핀 구간에서만 원본과 같은 스케줄.
        핀 해제 후 "밀려난 만큼 따라가기"는 폐기(7/10) — fixed 사본을 JS로 쫓게 하면
        사파리 관성 스크롤에서 한 프레임씩 늦어 글자가 붕 뜬 이중상이 된다.
@@ -1179,7 +1193,7 @@
   const FADE = 0.16;   /* 경계 크로스페이드 폭 (도판 하나 = 1) */
   function worksUpdate() {
     if (reduced || !pages.length) return;
-    const vh = window.innerHeight;
+    const vh = vhBase;   /* 도록 진행도도 CSS vh 기준 — iOS 주소창 접힘에 도판 전환이 안 튀게(7/31) */
     const rect = gal.getBoundingClientRect();
     if (rect.bottom < 0 || rect.top > vh) return;   /* 화면 밖 — 프레임 비용 0 */
     const x = clamp01(-rect.top / (rect.height - vh)) * pages.length;
@@ -1212,10 +1226,17 @@
   }, { threshold: 0.25 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  /* ══ 앵커 이동: 자체 rAF 스크롤 (C안 버그 재발 방지) ══ */
+  /* ══ 앵커 이동: 자체 rAF 스크롤 (C안 버그 재발 방지) ══
+     7/31: 취소 장치 추가 — 사용자가 휠·터치·키를 건드리거나 다른 메뉴를 또 누르면
+     진행 중이던 애니메이션을 즉시 놓는다(0.9초간 사용자 스크롤과 줄다리기하던 버그) */
+  let smoothId = 0;
+  ['wheel', 'touchstart', 'keydown'].forEach(ev =>
+    window.addEventListener(ev, () => { smoothId++; }, { passive: true }));
   function smoothTo(targetY, ms) {
+    const id = ++smoothId;
     const startY = window.scrollY, diff = targetY - startY, t0 = performance.now();
     function step(t) {
+      if (id !== smoothId) return;   /* 사용자 개입 또는 새 이동 — 즉시 양보 */
       const k = Math.min(1, (t - t0) / ms);
       const e = k < .5 ? 2*k*k : 1 - Math.pow(-2*k + 2, 2) / 2;
       window.scrollTo(0, startY + diff * e);
@@ -1223,11 +1244,6 @@
     }
     requestAnimationFrame(step);
   }
-  /* Works 행 = 상세 페이지 없는 임시 링크(#) — 기본 동작이 "맨 위로 점프"라서
-     모바일 탭이 사진 보던 사람을 히어로로 던진다 → 아무 일도 안 하게 */
-  document.querySelectorAll('.work a.row[href="#"]').forEach(a => {
-    a.addEventListener('click', e => e.preventDefault());
-  });
   document.querySelectorAll('a[data-scroll]').forEach(a => {
     a.addEventListener('click', e => {
       const el = document.querySelector(a.getAttribute('href'));
@@ -1266,8 +1282,11 @@
     { t: '600각' },
     { g: 'lvl', l: '±0' },
   ];
-  const isMobile = matchMedia('(max-width:640px)').matches;
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* 환경 판정은 첫 스크립트가 html 클래스로 찍어둔 단일 출처를 읽는다(7/31 일원화):
+     no-ink ∧ ¬touch-ink ⇔ 모션감소. 레이아웃 분기점은 CSS 모바일 미디어쿼리와 동일한 760 */
+  const rootCls = document.documentElement.classList;
+  const reduced = rootCls.contains('no-ink') && !rootCls.contains('touch-ink');
+  const isMobile = matchMedia('(max-width:760px)').matches;
   const count = isMobile ? 8 : 10;
 
   /* 도면 주석 빌더 — 선·글자 전부 var(--ink), 깊이(블러·농도)·패럴랙스는 부모 .kw가 받는다 */
@@ -1427,10 +1446,12 @@
 (function () {
   const cv = document.getElementById('inkCanvas');
   if (!cv) return;
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const coarse = matchMedia('(pointer: coarse)').matches;
+  /* 환경 판정 = 첫 스크립트가 찍은 html 클래스 단일 출처(7/31 일원화) —
+     각자 재판정하다 조건이 어긋나면 로고 완성색과 잉크 존재가 따로 놀게 된다 */
+  const rootCls = document.documentElement.classList;
+  const reduced = rootCls.contains('no-ink') && !rootCls.contains('touch-ink');
   if (reduced) { cv.remove(); return; }
-  const touch = coarse;   /* 모바일 = 커서 대신 터치·스크롤·첫 방울이 잉크를 떨군다 */
+  const touch = rootCls.contains('touch-ink');   /* 모바일 = 커서 대신 터치·스크롤·첫 방울이 잉크를 떨군다 */
   const ctx = cv.getContext('2d');
   let W, H, dpr;
   function resize() {
@@ -1469,18 +1490,10 @@
   ];
   let lastInk = -1;
 
-  /* 먹 섹션 회색 고정 로직 — 7/14 전체 밝은 톤 통일로 먹 섹션이 사라져 해제(빈 배열).
-     어두운 섹션이 다시 생기면 id를 넣으면 그 구간만 회색으로 돌아간다 */
-  let darkRanges = [];
-  function calcDark() {
-    darkRanges = []
-      .map(id => document.getElementById(id)).filter(Boolean)
-      .map(el => { const r = el.getBoundingClientRect(); return [r.top + scrollY, r.bottom + scrollY]; });
-  }
-  calcDark();
-  window.addEventListener('load', () => setTimeout(calcDark, 100));
-  window.addEventListener('resize', () => setTimeout(calcDark, 100));
-  const isDark = docY => darkRanges.some(r => docY >= r[0] && docY < r[1]);
+  /* 먹 섹션 회색 고정(darkRanges) 기제는 7/31 삭제 — 7/14 전체 밝은 톤 통일로 먹 섹션이 사라져
+     영원히 빈 배열이던 죽은 코드. 어두운 섹션이 다시 생기면: 섹션 세로 범위를 캐시해두고
+     spawn에서 방울 y가 그 범위면 ik=0(회색) 고정으로 복원하면 된다(파스텔 역산색이 먹 위에서
+     올리브·남색 얼룩으로 노출되는 것 방지) */
 
   const blobs = [];
   let lastX = -1e9, lastY = -1e9, running = false;
@@ -1504,13 +1517,10 @@
     });
     /* 7/10 롤백: "더 퍼지게" 물리값(rMax 1.5배·life 6.5~8s·농도 0.115)이 실사용에서
        거대한 회색 얼룩으로 읽힘(사용자) → 예고했던 롤백 경로대로 크기·수명·농도 축소 */
-    /* 색 배정 — 먹 섹션이면 회색 고정, 종이에선 직전 방울과 다른 색을 뽑아 궤적에 색이 섞이게 */
-    let ik = 0;
-    if (!isDark(y + scrollY)) {
-      ik = Math.floor(Math.random() * INKS.length);
-      if (ik === lastInk) ik = (ik + 1 + Math.floor(Math.random() * (INKS.length - 1))) % INKS.length;
-      lastInk = ik;
-    }
+    /* 색 배정 — 직전 방울과 다른 색을 뽑아 궤적에 색이 섞이게 */
+    let ik = Math.floor(Math.random() * INKS.length);
+    if (ik === lastInk) ik = (ik + 1 + Math.floor(Math.random() * (INKS.length - 1))) % INKS.length;
+    lastInk = ik;
     blobs.push({ x, y, seeds, born: performance.now(), ink: INKS[ik],
       life: 4200 + Math.random() * 2200,
       rMax: touch ? 60 + Math.random() * 65 : 135 + Math.random() * 145 });
