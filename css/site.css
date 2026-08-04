@@ -75,6 +75,12 @@ figcaption em, #ab-r dd em { display: block; font-style: normal; color: var(--di
 #ho-ti .bi { display: block; }
 #ho-ti .bi-b { padding-bottom: .25em; }
 #ab-big .bi-b { padding-top: .5em; }
+/* 이 강조 문장은 폰 화면(390px)보다 길다. 짧은 줄용 리빌(.tx)은 줄바꿈을 막아서
+   문장이 화면 밖으로 삐져나가고 페이지가 좌우로 흔들렸다 — 그래서 줄 단위 리빌로 바꿨다.
+   면 채움이 통짜 막대가 되지 않도록, 쪼개져 있는 동안에는 배경을 줄(.x)로 옮긴다.
+   쪼개기 전·후(평문)에는 인라인 배경이 줄마다 알아서 나뉜다. */
+#ab-big .a-b:has(.xl) { display: block; background: none; padding: 0; }
+#ab-big .a-b .xl > .x { color: #fff; background: #000; padding: .138888vw .208332vw .17361vw; }
 #co-r .bi-b { display: block; padding-top: .7em; }
 #co-r .br  { display: inline-block; padding-top: 1.2em; }
 #p1-nx .v .bi-b { color: #8f8f8f; }

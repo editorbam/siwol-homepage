@@ -657,8 +657,8 @@ function renderHome() {
         `<dt>${bi(k, T.ko.abDl[i][0])}</dt>
          <dd data-fade>${isKo() ? T.ko.abDl[i][1] : v}<em>${isKo() ? v : T.ko.abDl[i][1]}</em></dd>`).join('') + `</dl>
     </div>
-    <div id="ab-big"><span class="a-b">${tx(isKo() ? T.ko.abBig : T.en.abBig)}</span>
-      <span class="bi-b">${tx(isKo() ? T.en.abBig : T.ko.abBig)}</span></div>`;
+    <div id="ab-big"><span class="a-b" data-txp>${isKo() ? T.ko.abBig : T.en.abBig}</span>
+      <span class="bi-b" data-txp>${isKo() ? T.en.abBig : T.ko.abBig}</span></div>`;
 
   const V = [STUDIO.tel, STUDIO.mail.toUpperCase(), STUDIO.insta];
   const H = ['tel:01080829592', 'mailto:' + STUDIO.mail, STUDIO.instaUrl];
