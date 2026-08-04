@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PROJECT — SIWOL 10月</title>
+
+<!-- ══ 검색·공유 층 ═════════════════════════════════════════════
+     이 페이지는 ?p=슬러그로 내용이 바뀐다. 아래 값은 "기본값"이고,
+     실제 프로젝트에 맞는 제목·설명·사진은 site.js의 renderProject()가 갈아끼운다.
+     카카오톡 미리보기는 자바스크립트를 실행하지 않으므로 아래 기본값이 뜬다 — 그래서 비워 두지 않는다.
+     ⚠️ 배포지 확정 시 절대주소 교체 (index.html과 같은 주소) -->
+<!-- ⚠️ 시안 단계 — 색인 차단. 정식 배포 때 index.html과 함께 이 줄을 지울 것. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="대전 상업공간 인테리어 디자인 스튜디오 10月(시월)의 프로젝트 기록.">
+<link rel="canonical" href="https://editorbam.github.io/siwol-homepage/project.html">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="SIWOL 10月">
+<meta property="og:title" content="PROJECT — 10月 인테리어 디자인">
+<meta property="og:description" content="대전 상업공간 인테리어 디자인 스튜디오 10月(시월)의 프로젝트 기록.">
+<meta property="og:url" content="https://editorbam.github.io/siwol-homepage/project.html">
+<meta property="og:image" content="https://editorbam.github.io/siwol-homepage/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="img/favicon-a.svg" type="image/svg+xml">
+<meta name="theme-color" content="#000000">
+<!-- ══ 검색·공유 층 끝 ═════════════════════════════════════════ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@300;400&family=IBM+Plex+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+
+<!-- 인트로 — 홈에서 이미 봤으면(세션) 즉시 제거된다 -->
+<div id="intro" aria-hidden="true">
+  <div class="ring"><span>LOADING...</span></div>
+  <div class="bar"><i></i></div>
+  <div class="pct br"><span>0%</span></div>
+  <div class="credit">INTERIOR DESIGN BY SIWOL 10月</div>
+</div>
+<div id="tr"></div>
+<div id="c"><span></span></div>
+
+<nav id="n">
+  <div id="n-lo"><a href="index.html" data-c="[HOME]">10月</a></div>
+  <ul id="n-me"></ul>
+  <ul id="n-la"></ul>
+</nav>
+
+<!-- 상단 메타 바 — 고정, exclusion -->
+<div class="p1-he" id="p1-he"></div>
+
+<!-- 좌우 세로쓰기 이동 -->
+<div id="p1-n">
+  <a id="p1-n0" href="#" class="br" data-c="[PREV]"></a>
+  <a id="p1-n1" href="#" class="br" data-c="[NEXT]"></a>
+</div>
+
+<main id="p1">
+  <section class="p1-ba">
+    <div class="p1-ba-ab">
+      <span class="ars"><i class="ar"></i><i class="ar"></i><i class="ar"></i></span>
+      <div id="p1-tx"></div>
+    </div>
+    <figure class="p1-ba-r" id="p1-hero"></figure>
+  </section>
+
+  <ul class="p1-ga" id="p1-ga"></ul>
+
+  <section id="p1-nx"></section>
+</main>
+
+<div id="f">
+  <div id="f-l"></div>
+  <div id="f-c"></div>
+  <div id="f-r"></div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+</body>
+</html>
