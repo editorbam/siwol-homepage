@@ -19,9 +19,18 @@ const lerp = (a, b, t) => (1 - t) * a + t * b;
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const TOUCH   = matchMedia('(hover: none)').matches;
 
-/* ── 언어 ───────────────────────────────────────────────────── */
+/* ── 언어 ─────────────────────────────────────────────────────
+   ⚠️ localStorage는 그냥 읽으면 안 된다. 저장소가 막힌 환경 — 사파리 "모든 쿠키 차단",
+   카카오톡·인스타그램 인앱 브라우저, 샌드박스 iframe — 에서는 접근 자체가 예외를 던진다.
+   이 파일은 본문을 전부 그리는 파일이라, 여기서 죽으면 인트로 흰 막이 걷히지 않고
+   사이트가 통째로 빈 화면이 된다. 링크를 카톡으로 보내는 사이트라 실제로 밟는 길이다.
+   (바로 아래 sessionStorage는 원래부터 감싸져 있었다 — 이쪽만 빠져 있었다.) */
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+};
 let LANG = new URLSearchParams(location.search).get('lang')
-        || localStorage.getItem('siwol-lang') || 'en';
+        || store.get('siwol-lang') || 'en';
 if (LANG !== 'ko' && LANG !== 'en') LANG = 'en';
 const t = () => T[LANG];
 const isKo = () => LANG === 'ko';
@@ -241,7 +250,8 @@ function initTransition() {
   addEventListener('pageshow', () => { tr.style.opacity = 0; tr.style.pointerEvents = 'none'; });
   document.addEventListener('click', e => {
     const a = e.target.closest('a[href]');
-    if (!a || a.target === '_blank' || e.metaKey || e.ctrlKey) return;
+    /* shiftKey도 빼야 한다 — 새 창으로 열기(⇧클릭)를 가로채면 안 된다 */
+    if (!a || a.target === '_blank' || e.metaKey || e.ctrlKey || e.shiftKey) return;
     const href = a.getAttribute('href');
     if (!href || href.startsWith('http') || href.startsWith('tel:') || href.startsWith('mailto:')) return;
     if (href.startsWith('#')) {
@@ -278,7 +288,9 @@ function initCursor() {
     c.firstElementChild.style.display = el ? 'inline-block' : 'none';
     if (!run) { run = true; requestAnimationFrame(loop); }
   });
-  addEventListener('mouseleave', () => c.classList.remove('on'));
+  /* window에 걸면 안 된다 — mouseleave는 버블링하지 않아서 window까지 오지 않는다.
+     그대로 두면 커서가 창 밖으로 나가도 라벨이 가장자리에 붙어 남는다 */
+  document.addEventListener('mouseleave', () => c.classList.remove('on'));
 }
 
 /* 인트로 — D안 hero-c.html에서 이식. 카운터가 100%에 닿으면 스스로 걷힌다.
@@ -328,7 +340,8 @@ function initIntro(after) {
   tween({ d: 700, de: 250, e: EASE.tx, u: pr => { track.style.transform = `scaleX(${pr})`; },
           cb: () => { track.style.transform = 'scaleX(1)'; } });   // ''로 두면 CSS의 scaleX(0)로 되접힌다
   fade(pct.parentNode, 0, 1, 600, 300);
-  step(pct, 300);
+  /* 카운터에는 계단 리빌을 걸지 않는다 — 아래 rAF가 매 프레임 같은 자리에 숫자를 쓰기 때문에
+     계단은 보이지도 않고, 끝날 때 cb가 원래 값 "0%"로 되돌려 한 프레임 깜빡였다 */
   fade(credit, 0, 1, 600, 600);
   step(credit, 600);
 
@@ -459,7 +472,7 @@ function renderChrome() {
 }
 function setLang(l) {
   if (l === LANG) return;
-  LANG = l; localStorage.setItem('siwol-lang', l);
+  LANG = l; store.set('siwol-lang', l);
   document.documentElement.dataset.lang = l;
   document.documentElement.lang = l;   /* 화면 낭독기·검색엔진이 읽는 건 dataset이 아니라 이쪽 */
   const tr = $('#tr');
@@ -507,7 +520,8 @@ function renderHome() {
   const th = $('#idx-th'), im = $('#idx-th img');
   $$('#idx a').forEach(a => {
     a.addEventListener('mouseenter', () => {
-      const p = P(a.dataset.s); im.src = src(p, p.cover); th.classList.add('on');
+      /* 손톱만 한 미리보기다. 1600px 원본(최대 570KB)을 부를 자리가 아니다 */
+      const p = P(a.dataset.s); im.src = srcW(p, p.cover, 800); th.classList.add('on');
     });
     a.addEventListener('mouseleave', () => th.classList.remove('on'));
   });
@@ -602,19 +616,38 @@ function renderProject() {
 }
 
 /* ── 부팅 ───────────────────────────────────────────────────── */
-function renderAll() { renderChrome(); renderHome(); renderProject(); }
+function renderAll() {
+  renderChrome(); renderHome(); renderProject();
+  const nj = $('#nojs'); if (nj) nj.remove();   // 여기까지 왔으면 정적 안전망은 필요 없다
+}
+
+/* 주소 끝의 #ab·#co 로 실제로 내려간다.
+   본문을 JS가 그리므로 브라우저가 해시를 풀 때는 그 자리가 아직 비어 있다 —
+   그대로 두면 프로젝트 페이지에서 STUDIO·CONTACT를 눌러도 홈 맨 위에 떨어진다. */
+function honorHash() {
+  const h = location.hash;
+  if (!h || h.length < 2) return;
+  let el = null;
+  try { el = $(h); } catch (e) { return; }       // 해시가 선택자로 못 쓰는 문자열일 수 있다
+  if (el) scrollToY(el.getBoundingClientRect().top + (sOn ? sCur : scrollY));
+}
 
 addEventListener('DOMContentLoaded', () => {
   document.documentElement.dataset.lang = LANG;
   document.documentElement.lang = LANG;
+  /* 새로고침 때 브라우저가 옛 스크롤 위치를 복원하는데, 그 시점엔 본문이 아직 없어서
+     엉뚱한 데로 간다. 복원은 우리가 맡는다(해시가 있으면 honorHash가 처리). */
+  try { history.scrollRestoration = 'manual'; } catch (e) {}
   renderAll();
   initCursor();
   initScroll();
   initTransition();
   startRaf();
-  const go = () => { collect(document); initIntro(initReveal); };
+  const go = () => { collect(document); initIntro(() => { initReveal(); honorHash(); }); };
+  /* .then(go).catch(go)로 쓰면 go() 자신이 던진 예외를 catch가 받아 go()를 한 번 더 돌린다
+     (관찰자·리빌 중복). 두 인자 형태여야 폰트 대기 실패만 받는다. */
   document.fonts && document.fonts.ready
-    ? document.fonts.ready.then(go).catch(go)      // 웹폰트 폭으로 재야 계단이 맞는다
+    ? document.fonts.ready.then(go, go)           // 웹폰트 폭으로 재야 계단이 맞는다
     : go();
 });
 

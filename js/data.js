@@ -108,7 +108,9 @@ const PROJECTS = [
   },
   {
     slug: 'kingsman', name: 'KINGSMAN BAR', ko: '킹스맨 바',
-    cat: 'BAR', catKo: '(상업) 바', loc: '—', locKo: '—', cover: 2, skip: [],
+    /* skip 근거: 원본에 같은 사진이 섞여 들어와 있다(md5 대조).
+       02 = 08 = 16 (같은 컷 3장) → 08·16 제외 / 03 = 06 → 06 제외. 남는 컷 15장. */
+    cat: 'BAR', catKo: '(상업) 바', loc: '—', locKo: '—', cover: 2, skip: [6, 8, 16],
     dims: [[1600,1066],[1600,1199],[1600,1066],[1600,1199],[1600,1066],[1600,1066],[1600,1199],[1600,1199],[1600,848],[1600,1199],[1600,1199],[1600,1199],[1600,1199],[1600,1066],[1600,1199],[1600,1199],[1600,1199],[1199,1600]],
     txt: [
       'A TAILOR-SHOP BAR. THE BACK WALL IS A ROW OF ARCHED, BACKLIT ALCOVES IN DARK TIMBER — THE SHAPE OF A FITTING ROOM, USED AS A BOTTLE DISPLAY.',
