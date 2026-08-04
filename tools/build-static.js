@@ -75,7 +75,9 @@ let n = 0;
 for (const [key, body] of Object.entries(B)) {
   const re = new RegExp(`(<!--s:${key}-->)[\\s\\S]*?(<!--/s:${key}-->)`);
   if (!re.test(html)) { console.error(`✗ index.html 에 <!--s:${key}--> 자리가 없습니다`); process.exit(1); }
-  html = html.replace(re, `$1${body}$2`);
+  /* 함수 형태로 넣는다 — 문자열로 넘기면 카피 안의 $& $1 $` 같은 게 치환 기호로 해석돼
+     본문이 조용히 망가진다(금액 표기에 $ 하나만 들어가도). */
+  html = html.replace(re, (m, open, close) => open + body + close);
   n++;
 }
 fs.writeFileSync(PAGE, html);

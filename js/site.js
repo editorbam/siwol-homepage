@@ -179,7 +179,10 @@ function splitLines(el) {
 function prepTxP(el) {
   if (el.__tp) return el.__tp;
   const raw = el.textContent || '';
-  const lines = splitLines(el);
+  /* 모션감소 환경에서는 쪼갤 이유가 없다. 쪼개 놓고 안 되돌리면 그대로 남는다.
+     안쪽에 <br>·<em> 같은 태그가 있는 문단도 건드리지 않는다 —
+     줄 쪼개기는 텍스트 한 덩어리를 전제하고, 되돌릴 때 태그가 납작해진다. */
+  const lines = (REDUCED || el.children.length) ? null : splitLines(el);
   const o = { el, raw, items: [], done: false, skip: !lines || !lines.length };
   el.__tp = o;
   if (o.skip) return o;
@@ -207,7 +210,7 @@ function hideTxP(list) {
 }
 function playTxP(o, delay) {
   if (o.done) return; o.done = true;
-  if (REDUCED || o.skip) { o.el.textContent = o.raw; return; }
+  if (o.skip) return;        /* 못 쪼갠 문단은 손대지 않았으니 되돌릴 것도 없다 */
   let acc = delay, left = o.items.length;
   const restore = () => { if (--left === 0) o.el.textContent = o.raw; };   // 다 끝나면 문단으로 복구
   o.items.forEach(it => {
@@ -268,8 +271,12 @@ const REVEAL = [];
 function collect(root) {
   REVEAL.length = 0;
   $$('.tx', root).forEach(el => REVEAL.push({ type: 'tx', o: prepTx(el), el }));
-  /* 문단은 줄로 쪼개야 해서 따로 모은다. 재기 → 감추기 두 패스는 .tx 와 같은 이유로 나눈다 */
-  $$('[data-txp]', root).forEach(el => REVEAL.push({ type: 'tp', o: prepTxP(el), el }));
+  /* 문단은 줄로 쪼개야 해서 따로 모은다. 재기 → 감추기 두 패스는 .tx 와 같은 이유로 나눈다.
+     못 쪼갠 문단(모션감소·안쪽 태그 있음)은 종전대로 페이드로 넘긴다 — 아무 모션도 없는 것보단 낫다 */
+  $$('[data-txp]', root).forEach(el => {
+    const o = prepTxP(el);
+    REVEAL.push(o.skip ? { type: 'fd', o: prepFade(el), el } : { type: 'tp', o, el });
+  });
   const txs = REVEAL.filter(r => r.type === 'tx').map(r => r.o);
   const tps = REVEAL.filter(r => r.type === 'tp').map(r => r.o);
   measureAll(txs); measureTxP(tps);
@@ -298,6 +305,25 @@ function initReveal() {
   }, { rootMargin: '0px 0px -12% 0px' });
   rest.forEach(r => { r.el.__rv = r; io.observe(r.el); });
 }
+
+/* 창 크기가 바뀌면 아직 안 열린 문단의 줄 나눔을 다시 잰다.
+   줄 위치·폭은 collect 시점에 굳는데, 화면 밖 문단은 스크롤해서 만날 때까지 안 열린다.
+   그사이 폰을 돌리거나 창을 줄이면 옛 폭으로 쪼갠 줄이 잘린 채 열린다. */
+let rzTxP = 0;
+addEventListener('resize', () => {
+  clearTimeout(rzTxP);
+  rzTxP = setTimeout(() => {
+    const pend = REVEAL.filter(r => r.type === 'tp' && !r.o.done && !r.o.skip);
+    if (!pend.length) return;
+    pend.forEach(r => {
+      r.o.el.textContent = r.o.raw;                 // 원래 문단으로 되돌리고
+      r.o.el.__tp = null;
+      r.o = prepTxP(r.o.el);                        // 지금 폭으로 다시 쪼갠다
+    });
+    const os = pend.filter(r => !r.o.skip).map(r => r.o);
+    measureTxP(os); hideTxP(os);
+  }, 220);
+});
 
 /* ══════════════════════════════════════════════════════════════
    부드러운 스크롤 — 레퍼런스의 감쇠 lerp (프레임률 무관)
