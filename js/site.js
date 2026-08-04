@@ -446,6 +446,9 @@ function setProjectMeta(p) {
   setMeta('meta[property="og:description"]', desc);
   setMeta('meta[property="og:url"]', url);
   setMeta('meta[property="og:image"]', img);
+  /* head 기본값은 워드마크 png다. 여기서 프로젝트 사진(jpg)으로 바꾸므로 형식도 같이 고친다 */
+  setMeta('meta[property="og:image:type"]', 'image/jpeg');
+  setMeta('meta[property="og:image:alt"]', nm(p));
   const d = dim(p, p.cover);
   setMeta('meta[property="og:image:width"]',  String(d[0]));
   setMeta('meta[property="og:image:height"]', String(d[1]));
