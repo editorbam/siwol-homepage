@@ -147,6 +147,91 @@ function playTx(o, delay) {
 }
 
 /* ══════════════════════════════════════════════════════════════
+   문단 계단 리빌 — 짧은 줄(.tx)과 같은 손짓을 여러 줄짜리 본문에도 준다.
+
+   왜 따로 만드나: .x 는 white-space:nowrap 이라 문단에 그대로 걸면 줄바꿈이 죽고
+   본문이 한 줄로 늘어선다. 그래서 "이미 그려진 줄"의 위치를 재서 줄 단위로 쪼갠 뒤,
+   줄마다 폭을 연다.
+
+   끝나면 원래 문단으로 되돌린다 — 쪼갠 채로 두면 창 크기를 바꿔도 줄이 그 자리에 굳는다.
+   ══════════════════════════════════════════════════════════════ */
+function splitLines(el) {
+  const node = el.firstChild;
+  if (!node || node.nodeType !== 3) return null;      // 텍스트 한 덩어리인 문단만 다룬다
+  const s = node.nodeValue;
+  if (!s.trim()) return null;
+  const r = document.createRange();
+  const out = [];
+  let start = 0, top = null;
+  for (let i = 0; i < s.length; i++) {
+    r.setStart(node, i); r.setEnd(node, i + 1);
+    const rect = r.getBoundingClientRect();
+    if (!rect.height) continue;                       // 줄 끝 공백 등 자리 없는 글자
+    if (top === null) { top = rect.top; continue; }
+    if (rect.top - top > 1) {                         // 줄이 바뀌었다
+      out.push(s.slice(start, i));
+      start = i; top = rect.top;
+    }
+  }
+  out.push(s.slice(start));
+  return out.map(t => t.trim()).filter(Boolean);
+}
+function prepTxP(el) {
+  if (el.__tp) return el.__tp;
+  const raw = el.textContent || '';
+  const lines = splitLines(el);
+  const o = { el, raw, items: [], done: false, skip: !lines || !lines.length };
+  el.__tp = o;
+  if (o.skip) return o;
+  el.textContent = '';
+  o.items = lines.map(t => {
+    const wrap = document.createElement('span'); wrap.className = 'x_ xl';
+    const x = document.createElement('span');    x.className = 'x';
+    x.textContent = t;
+    wrap.appendChild(x); el.appendChild(wrap);
+    return { wrap, x, raw: t, ch: Array.from(t), w: 0 };
+  });
+  return o;
+}
+function measureTxP(list) {
+  list.forEach(o => o.items.forEach(it => { it.w = it.x.getBoundingClientRect().width; }));
+}
+function hideTxP(list) {
+  if (REDUCED) return;
+  list.forEach(o => o.items.forEach(it => {
+    if (it.w <= 0) { it.skip = true; return; }
+    it.wrap.style.width = it.w + 'px';
+    it.x.style.width = '0px';
+    it.x.textContent = '';
+  }));
+}
+function playTxP(o, delay) {
+  if (o.done) return; o.done = true;
+  if (REDUCED || o.skip) { o.el.textContent = o.raw; return; }
+  let acc = delay, left = o.items.length;
+  const restore = () => { if (--left === 0) o.el.textContent = o.raw; };   // 다 끝나면 문단으로 복구
+  o.items.forEach(it => {
+    const c = it.ch.length;
+    if (!c || it.skip) { restore(); return; }
+    const per = lerp(40, 14, clamp((c - 4) / 56, 0, 1));    // .tx 와 같은 속도 규칙
+    const dur = clamp(c * per, 300, c * 100);
+    let last = -1;
+    tween({
+      d: dur, de: acc, e: EASE.tx,
+      u: pr => {
+        const v = Math.floor(pr * c);
+        if (v === last) return;
+        last = v;
+        it.x.style.width = (v / c * it.w) + 'px';
+        it.x.textContent = scramble(it.ch, v, Math.min(c - v, Math.round(c * .15)));
+      },
+      cb: () => { it.x.textContent = it.raw; it.x.style.width = ''; it.wrap.style.width = ''; restore(); }
+    });
+    acc += 90;                                             // 줄끼리 90ms씩 밀며 흘러내린다
+  });
+}
+
+/* ══════════════════════════════════════════════════════════════
    블록 / 이미지 리빌 — 중앙 쪽으로 당겨진 축소 상태에서 제자리로
    ══════════════════════════════════════════════════════════════ */
 function prepFade(el) {
@@ -183,15 +268,20 @@ const REVEAL = [];
 function collect(root) {
   REVEAL.length = 0;
   $$('.tx', root).forEach(el => REVEAL.push({ type: 'tx', o: prepTx(el), el }));
+  /* 문단은 줄로 쪼개야 해서 따로 모은다. 재기 → 감추기 두 패스는 .tx 와 같은 이유로 나눈다 */
+  $$('[data-txp]', root).forEach(el => REVEAL.push({ type: 'tp', o: prepTxP(el), el }));
   const txs = REVEAL.filter(r => r.type === 'tx').map(r => r.o);
-  measureAll(txs);
+  const tps = REVEAL.filter(r => r.type === 'tp').map(r => r.o);
+  measureAll(txs); measureTxP(tps);
   $$('[data-fade]', root).forEach(el => REVEAL.push({ type: 'fd', o: prepFade(el), el }));
-  hideAll(txs);
+  hideAll(txs); hideTxP(tps);
 }
 function play(items, base) {
   items.forEach((r, i) => {
     const de = base + 25 * i;                      // 레퍼런스 스태거 25ms
-    r.type === 'tx' ? playTx(r.o, de) : playFade(r.o, de);
+    if (r.type === 'tx') playTx(r.o, de);
+    else if (r.type === 'tp') playTxP(r.o, de);
+    else playFade(r.o, de);
   });
 }
 function initReveal() {
@@ -389,10 +479,11 @@ function bi(en, ko, br) {
   return out + '</span>';
 }
 /* 문단 병기 — 리빌은 페이드로 */
+/* 문단 병기 — 리빌은 짧은 줄(.tx)과 같은 계단 모션. 줄 단위로 열린다(playTxP) */
 function biP(en, ko, cls) {
   const [a, b] = isKo() ? [ko, en] : [en, ko];
-  return `<p class="${cls}" data-fade>${a}</p>` +
-         (b && b !== a ? `<p class="${cls} bi-b" data-fade>${b}</p>` : '');
+  return `<p class="${cls}" data-txp>${a}</p>` +
+         (b && b !== a ? `<p class="${cls} bi-b" data-txp>${b}</p>` : '');
 }
 const P   = s => PROJECTS.find(p => p.slug === s);
 const nm  = p => isKo() ? p.ko    : p.name;

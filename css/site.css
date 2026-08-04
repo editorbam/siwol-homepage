@@ -55,6 +55,9 @@ body {
 .x_, .x { position: relative; display: inline-block; overflow: hidden;
           line-height: 1.15; vertical-align: bottom; }
 .x  { will-change: width; white-space: nowrap; }
+/* 문단을 줄 단위로 쪼갤 때 쓰는 껍데기 — 줄이 아래로 쌓여야 하므로 block.
+   line-height 는 문단 것을 그대로 물려받아야 줄간이 달라지지 않는다. */
+.xl { display: block; line-height: inherit; vertical-align: baseline; }
 
 /* 검정 박스로 채운 글자 (레퍼런스 .a-b .x) */
 .x-b, .a-b { color: #fff; background: #000; padding: .138888vw .208332vw .17361vw; }
