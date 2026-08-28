@@ -127,6 +127,25 @@ const PROJECTS = [
     ]
   },
   {
+    slug: 'kingsman', name: 'RESTAURANT', ko: '일반음식점',
+    /* skip 근거: 원본에 같은 사진이 섞여 들어와 있다(md5 대조).
+       02 = 08 = 16 (같은 컷 3장) → 08·16 제외 / 03 = 06 → 06 제외. 남는 컷 15장. */
+    cat: 'F&B', catKo: '(상업) F&B', loc: '—', locKo: '—', cover: 2, skip: [6, 8, 16],
+    dims: [[1600,1066],[1600,1199],[1600,1066],[1600,1199],[1600,1066],[1600,1066],[1600,1199],[1600,1199],[1600,848],[1600,1199],[1600,1199],[1600,1199],[1600,1199],[1600,1066],[1600,1199],[1600,1199],[1600,1199],[1199,1600]],
+    txt: [
+      'A TAILOR-SHOP BAR. THE BACK WALL IS A ROW OF ARCHED, BACKLIT ALCOVES IN DARK TIMBER — THE SHAPE OF A FITTING ROOM, USED AS A BOTTLE DISPLAY.',
+      'FLOOR IN SMALL CHECKERBOARD TILE. BANQUETTE IN GREEN BUTTON-TUFTED LEATHER. DAMASK PAPER ON THE SIDE WALL, DELIBERATELY ONE STEP TOO MUCH.',
+      'THE COUNTER TOP IS BRUSHED STEEL, WHICH IS THE ONLY COLD MATERIAL IN THE ROOM AND THE ONLY ONE YOU TOUCH.',
+      'BEFORE: A FLOOR PLATE WITH SPRINKLER MAIN AND DECK CEILING FULLY EXPOSED.'
+    ],
+    txtKo: [
+      '양복점을 빌려온 바. 뒷벽은 짙은 목재로 짠 아치형 진열구가 줄지어 서고 뒤에서 빛이 나온다. 피팅룸의 형태를 병 진열로 썼다.',
+      '바닥은 작은 체커보드 타일. 벤치는 초록 버튼 튀프팅 가죽. 측벽에는 다마스크 벽지, 일부러 한 단계 과하게 넣었다.',
+      '카운터 상판은 헤어라인 스테인리스. 방에서 유일하게 차가운 재료이고, 유일하게 손이 닿는 재료다.',
+      '이전 상태 — 스프링클러 배관과 데크 플레이트 천장이 전부 드러난 바닥판.'
+    ]
+  },
+  {
     slug: 'doan', name: 'CO-WORKING OFFICE', ko: '공유오피스',
     cat: 'OFFICE', catKo: '(오피스)', loc: 'DAEJEON', locKo: '대전', cover: 2, skip: [],
     dims: [[1600,1200],[1600,901]],
