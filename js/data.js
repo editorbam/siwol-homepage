@@ -110,21 +110,6 @@ const PROJECTS = [
     ]
   },
   {
-    slug: 'bubas', name: 'GABLE-ROOF SHOP', ko: '박공 지붕 매장',
-    cat: 'SHOP', catKo: '(상업) 리테일', loc: '—', locKo: '—', cover: 2, skip: [],
-    dims: [[1600,1066],[1066,1600],[1066,1600],[1066,1600],[1600,1200],[1600,1200],[1600,1200],[1600,1200],[1600,1200],[1066,1600],[1066,1600],[1066,1600],[1600,1200],[1379,1600],[1200,1600],[1200,1600]],
-    txt: [
-      'THE HOARDING WAS THE FIRST PIECE OF DESIGN — A GABLE WRAPPED IN PALE BLUE WITH A LINE-DRAWN BRIDGE, SO THE SITE ADVERTISED ITSELF WHILE IT WAS STILL A HOLE.',
-      'BEHIND IT: STRUCTURE OPENED UP, OLD OPENINGS CUT WIDER, THE SHELL TAKEN BACK TO WHAT COULD BE TRUSTED.',
-      'THE FINISHED ENVELOPE IS DARK BOARD SIDING AGAINST A TIMBER DECK — DARK OUTSIDE, LIGHT INSIDE, THE WINDOW DOING ALL THE WORK.'
-    ],
-    txtKo: [
-      '가림막이 첫 번째 디자인이었다. 박공을 연한 파랑으로 감싸고 선으로 그린 다리를 얹었다. 아직 구덩이일 때부터 현장이 스스로를 광고했다.',
-      '그 뒤에서는 구조를 열었다. 기존 개구부를 넓히고, 믿을 수 있는 데까지 껍질을 벗겼다.',
-      '완성된 외피는 짙은 판재 사이딩과 목재 데크. 바깥은 어둡고 안은 밝다. 일은 창이 다 한다.'
-    ]
-  },
-  {
     slug: 'kuriju', name: 'HAIR SALON', ko: '헤어 살롱',
     cat: 'SALON', catKo: '(상업) 살롱', loc: '—', locKo: '—', cover: 2, skip: [],
     dims: [[1600,1066],[1600,1066],[1600,1066],[1065,1600],[1065,1600],[1600,1066],[1600,1200],[1600,1200],[1600,1200]],
