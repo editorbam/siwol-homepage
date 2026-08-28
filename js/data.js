@@ -10,7 +10,7 @@
 
 const PROJECTS = [
   {
-    slug: 'daehwa-garden', name: 'CHARCOAL GRILL HOUSE', ko: '숯불갈비집',
+    slug: 'daehwa-garden', name: 'CHARCOAL GRILL HOUSE', ko: '숯불구이집',
     cat: 'F&B', catKo: '(상업) F&B', loc: 'DAEJEON', locKo: '대전', cover: 2, skip: [6],
     dims: [[1600,1545],[1600,1200],[1600,1200],[1600,1200],[1600,1200],[944,1600],[1600,1371],[1600,1199]],
     txt: [
