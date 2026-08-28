@@ -10,7 +10,7 @@
 
 const PROJECTS = [
   {
-    slug: 'daehwa-garden', name: 'DAEHWA CHARCOAL GARDEN', ko: '대화 숯불가든',
+    slug: 'daehwa-garden', name: 'CHARCOAL GRILL HOUSE', ko: '숯불갈비집',
     cat: 'F&B', catKo: '(상업) F&B', loc: 'DAEJEON', locKo: '대전', cover: 2, skip: [6],
     dims: [[1600,1545],[1600,1200],[1600,1200],[1600,1200],[1600,1200],[944,1600],[1600,1371],[1600,1199]],
     txt: [
@@ -27,8 +27,9 @@ const PROJECTS = [
     ]
   },
   {
-    slug: 'daehwa-sanjang', name: 'DAEHWA SANJANG', ko: '대화 산장',
-    cat: 'F&B', catKo: '(상업) F&B', loc: 'DAEJEON', locKo: '대전', cover: 4, skip: [],
+    slug: 'daehwa-sanjang', name: 'CHARCOAL GRILL HOUSE', ko: '숯불구이집',
+    cat: 'F&B', catKo: '(상업) F&B', loc: 'GYEONGJU', locKo: '경주', cover: 7, skip: [],
+    coverNote: ['EVERY TREE WAS CARVED BY HAND AND RAISED ONE BY ONE.', '하나하나 직접 깎아서 세운 나무.'],
     dims: [[1600,1200],[1600,1200],[1329,1600],[1600,1199],[1600,1200],[1600,1101],[1600,1200],[1600,1200],[1600,1244]],
     txt: [
       'A MOUNTAIN LODGE PUT ON A CITY STREET. THE FACADE IS BUILT OUT OF SPLIT FIREWOOD, STACKED CUT-END OUT, RUNNING THE FULL WIDTH OF THE SHOPFRONT.',
@@ -42,41 +43,7 @@ const PROJECTS = [
     ]
   },
   {
-    slug: 'daehwaro', name: 'DAEHWARO', ko: '대화로',
-    cat: 'F&B', catKo: '(상업) F&B', loc: 'DAEJEON', locKo: '대전', cover: 5, skip: [],
-    dims: [[1600,1200],[1600,1200],[1600,888],[1600,1200],[1600,1200],[1600,1090],[1600,1200],[1600,1200]],
-    txt: [
-      'THE THIRD ROOM IN THE DAEHWA SERIES, AND THE COLDEST OF THE THREE.',
-      'WALLS ARE BOARD-MARKED CONCRETE AND CLEFT SLATE — SURFACES THAT HOLD A SHADOW INSTEAD OF BOUNCING IT BACK.',
-      'THE FIREWOOD RETURNS, THIS TIME AS AN INTERIOR WALL. BOTTLES SIT IN LIT NICHES CUT INTO THE STACK, SO THE STORAGE AND THE DISPLAY ARE THE SAME WALL.',
-      'FROM THE STREET AT NIGHT THE STACK IS WHAT YOU SEE FIRST. THE SIGN IS SECOND.'
-    ],
-    txtKo: [
-      '대화 시리즈의 세 번째 방. 셋 중 가장 차갑다.',
-      '벽은 거푸집 자국이 남은 콘크리트와 쪼갠 슬레이트. 빛을 되쏘지 않고 그림자를 붙잡는 표면이다.',
-      '장작이 다시 나온다. 이번에는 실내 벽으로. 쌓은 틈을 파낸 자리에 조명과 병이 들어간다. 보관과 진열이 같은 벽이다.',
-      '밤에 길에서 먼저 보이는 것은 장작이다. 간판은 그다음이다.'
-    ]
-  },
-  {
-    slug: 'rolex', name: 'GALMA-DONG ROLEX BAR', ko: '갈마동 로렉스 바',
-    cat: 'BAR', catKo: '(상업) 바', loc: 'DAEJEON', locKo: '대전', cover: 2, skip: [],
-    dims: [[1600,1600],[1600,1600],[1600,1600],[1600,1600],[1600,1199],[1600,1199],[1600,1199],[1600,1199],[1600,866],[1600,866],[1600,1600],[1600,1600],[1600,1600]],
-    txt: [
-      'STARTED AS A BARE BASEMENT SHELL — EXPOSED SLAB, EXPOSED SERVICES, NO LEVEL FLOOR.',
-      'THE BACK BAR IS A DEEP GREEN LACQUERED WALL CUT WITH BACKLIT FACETED NICHES. THE FACETS ARE NOT ORNAMENT: EACH ONE IS SIZED TO A BOTTLE.',
-      'THE COUNTER IS MIRROR-POLISHED STONE. IT DOUBLES EVERY LIGHT IN THE ROOM, WHICH IS HOW A LOW CEILING IS MADE TO STOP FEELING LOW.',
-      'BRASS CAGE PENDANTS, WARM AND SINGLE-SOURCE. NO DOWNLIGHT ON A FACE.'
-    ],
-    txtKo: [
-      '시작은 지하 골조뿐이었다. 슬래브 노출, 설비 노출, 수평이 맞는 바닥도 없었다.',
-      '백바는 짙은 녹색 도장 벽을 파내 각진 진열구를 만들고 뒤에서 빛을 넣었다. 각면은 장식이 아니다. 하나하나 병 치수에 맞췄다.',
-      '카운터는 거울처럼 연마한 석재. 방 안의 모든 빛을 한 번씩 더 만든다. 낮은 천장이 낮게 느껴지지 않는 이유다.',
-      '황동 케이지 펜던트, 따뜻하고 광원은 하나. 얼굴 위로 떨어지는 다운라이트는 두지 않았다.'
-    ]
-  },
-  {
-    slug: 'masta', name: 'MASTA HIGHBALL', ko: '마스타 하이볼',
+    slug: 'masta', name: 'IZAKAYA', ko: '이자카야',
     cat: 'BAR', catKo: '(상업) 바', loc: '—', locKo: '—', cover: 4, skip: [],
     dims: [[1600,1200],[1600,1200],[1600,1225],[1600,1200],[1600,1200],[1600,1200],[1600,1216]],
     txt: [
@@ -91,43 +58,43 @@ const PROJECTS = [
     ]
   },
   {
-    slug: 'sgood', name: 'SGOOD', ko: '스굿바',
-    cat: 'BAR', catKo: '(상업) 바', loc: '—', locKo: '—', cover: 2, skip: [],
-    note: 'CLASSIFICATION UNCONFIRMED', noteKo: '분류 확인 필요',
+    slug: 'daehwaro', name: 'CHARCOAL GRILL HOUSE', ko: '숯불구이집',
+    cat: 'F&B', catKo: '(상업) F&B', loc: 'DAEJEON', locKo: '대전', cover: 5, home: 4, skip: [],
+    dims: [[1600,1200],[1600,1200],[1600,888],[1600,1200],[1600,1200],[1600,1090],[1600,1200],[1600,1200]],
+    txt: [
+      'THE THIRD OF THREE ROOMS, AND THE COLDEST.',
+      'WALLS ARE BOARD-MARKED CONCRETE AND CLEFT SLATE — SURFACES THAT HOLD A SHADOW INSTEAD OF BOUNCING IT BACK.',
+      'THE FIREWOOD RETURNS, THIS TIME AS AN INTERIOR WALL. BOTTLES SIT IN LIT NICHES CUT INTO THE STACK, SO THE STORAGE AND THE DISPLAY ARE THE SAME WALL.',
+      'FROM THE STREET AT NIGHT THE STACK IS WHAT YOU SEE FIRST. THE SIGN IS SECOND.'
+    ],
+    txtKo: [
+      '세 방 중 세 번째. 셋 중 가장 차갑다.',
+      '벽은 거푸집 자국이 남은 콘크리트와 쪼갠 슬레이트. 빛을 되쏘지 않고 그림자를 붙잡는 표면이다.',
+      '장작이 다시 나온다. 이번에는 실내 벽으로. 쌓은 틈을 파낸 자리에 조명과 병이 들어간다. 보관과 진열이 같은 벽이다.',
+      '밤에 길에서 먼저 보이는 것은 장작이다. 간판은 그다음이다.'
+    ]
+  },
+  {
+    slug: 'sgood', name: 'CAFE', ko: '카페',
+    /* heroWide: 대표컷을 텍스트 옆이 아니라 아래 가운데로, 가로로 넓게 (8/27 스굿바만)
+       8/28 시월 피드백: 대표컷 = 01(정면 간판 컷). 02는 꾸리쥬(살롱 의자) 사진이 섞여 들어온 것 → 제외.
+       05·10 = 01과 같은 정면 컷 → 제외. 남는 컷 11장. */
+    cat: 'CAFE', catKo: '(상업) 카페', loc: '—', locKo: '—', cover: 1, heroWide: true, skip: [2, 5, 10],
     dims: [[1600,883],[1600,954],[1199,1600],[1199,1600],[1600,900],[1281,1600],[1280,1600],[1280,1600],[1448,1600],[1600,883],[1600,1200],[1600,1200],[1600,1200],[1600,1200]],
     txt: [
-      'A CORNER SHOPFRONT IN BLACK STEEL AND GLASS, WITH "SPREAD GOOD VIBES" SET STRAIGHT ACROSS THE HEAD OF THE WINDOW.',
-      'THE INTERIOR IS ALMOST EMPTY BY DESIGN — WHITE WALLS, ONE CHAIR, ONE PENDANT. WHEN A ROOM ONLY HAS TO HOLD ONE PERSON AT A TIME, EVERYTHING ELSE IS SUBTRACTED.',
+      'A CORNER SHOPFRONT IN BLACK STEEL AND GLASS, WITH A SINGLE LINE OF LETTERING SET STRAIGHT ACROSS THE HEAD OF THE WINDOW.',
+      'INSIDE, PALE TIMBER AND WHITE TILE. THE COUNTER WALL HANGS ITS TOOLS ON PEGS — LADLES, SIEVES, A BOARD — SO THE EQUIPMENT IS THE DISPLAY. THE BACK WINDOW OPENS ONTO TREES.',
       'THE BUILD PHOTOS SHOW THE OPPOSITE CONDITION: A RAW SLAB, CABLE ON THE FLOOR, DUCTWORK OPEN.'
     ],
     txtKo: [
-      '검은 철과 유리로 짠 모서리 매장. 창 상단을 가로질러 "SPREAD GOOD VIBES"를 한 줄로 앉혔다.',
-      '실내는 의도적으로 거의 비어 있다. 흰 벽, 의자 하나, 펜던트 하나. 한 번에 한 사람만 받는 방이면 나머지는 뺀다.',
+      '검은 철과 유리로 짠 모서리 매장. 창 상단을 가로질러 글자 한 줄을 앉혔다.',
+      '안은 연한 목재와 흰 타일. 카운터 벽에는 국자와 체, 도마가 못에 걸린다. 도구가 곧 진열이다. 뒷창은 나무를 향해 열려 있다.',
       '시공 컷은 정반대다. 바닥 슬래브가 그대로 드러나고, 전선이 널려 있고, 덕트가 열려 있다.'
     ]
   },
   {
-    slug: 'kingsman', name: 'KINGSMAN BAR', ko: '킹스맨 바',
-    /* skip 근거: 원본에 같은 사진이 섞여 들어와 있다(md5 대조).
-       02 = 08 = 16 (같은 컷 3장) → 08·16 제외 / 03 = 06 → 06 제외. 남는 컷 15장. */
-    cat: 'BAR', catKo: '(상업) 바', loc: '—', locKo: '—', cover: 2, skip: [6, 8, 16],
-    dims: [[1600,1066],[1600,1199],[1600,1066],[1600,1199],[1600,1066],[1600,1066],[1600,1199],[1600,1199],[1600,848],[1600,1199],[1600,1199],[1600,1199],[1600,1199],[1600,1066],[1600,1199],[1600,1199],[1600,1199],[1199,1600]],
-    txt: [
-      'A TAILOR-SHOP BAR. THE BACK WALL IS A ROW OF ARCHED, BACKLIT ALCOVES IN DARK TIMBER — THE SHAPE OF A FITTING ROOM, USED AS A BOTTLE DISPLAY.',
-      'FLOOR IN SMALL CHECKERBOARD TILE. BANQUETTE IN GREEN BUTTON-TUFTED LEATHER. DAMASK PAPER ON THE SIDE WALL, DELIBERATELY ONE STEP TOO MUCH.',
-      'THE COUNTER TOP IS BRUSHED STEEL, WHICH IS THE ONLY COLD MATERIAL IN THE ROOM AND THE ONLY ONE YOU TOUCH.',
-      'BEFORE: A FLOOR PLATE WITH SPRINKLER MAIN AND DECK CEILING FULLY EXPOSED.'
-    ],
-    txtKo: [
-      '양복점을 빌려온 바. 뒷벽은 짙은 목재로 짠 아치형 진열구가 줄지어 서고 뒤에서 빛이 나온다. 피팅룸의 형태를 병 진열로 썼다.',
-      '바닥은 작은 체커보드 타일. 벤치는 초록 버튼 튀프팅 가죽. 측벽에는 다마스크 벽지, 일부러 한 단계 과하게 넣었다.',
-      '카운터 상판은 헤어라인 스테인리스. 방에서 유일하게 차가운 재료이고, 유일하게 손이 닿는 재료다.',
-      '이전 상태 — 스프링클러 배관과 데크 플레이트 천장이 전부 드러난 바닥판.'
-    ]
-  },
-  {
-    slug: 'cherry', name: 'CHERRYJU', ko: '경주 체리주',
-    cat: 'F&B', catKo: '(상업) F&B', loc: 'GYEONGJU', locKo: '경주', cover: 5, skip: [],
+    slug: 'cherry', name: 'LIQUOR SHOP', ko: '주류샵',
+    cat: 'SHOP', catKo: '(상업) 리테일', loc: 'GYEONGJU', locKo: '경주', cover: 5, skip: [],
     dims: [[1600,980],[1600,1541],[1189,1600],[1086,1600],[1552,1600],[1600,1200]],
     txt: [
       'THE INVERSE OF THE BARS — WHITE, PINK, AND LIT FLAT.',
@@ -143,7 +110,7 @@ const PROJECTS = [
     ]
   },
   {
-    slug: 'bubas', name: 'BUBAS', ko: '부바스',
+    slug: 'bubas', name: 'GABLE-ROOF SHOP', ko: '박공 지붕 매장',
     cat: 'SHOP', catKo: '(상업) 리테일', loc: '—', locKo: '—', cover: 2, skip: [],
     dims: [[1600,1066],[1066,1600],[1066,1600],[1066,1600],[1600,1200],[1600,1200],[1600,1200],[1600,1200],[1600,1200],[1066,1600],[1066,1600],[1066,1600],[1600,1200],[1379,1600],[1200,1600],[1200,1600]],
     txt: [
@@ -158,7 +125,7 @@ const PROJECTS = [
     ]
   },
   {
-    slug: 'kuriju', name: 'KURIJU', ko: '꾸리쥬',
+    slug: 'kuriju', name: 'HAIR SALON', ko: '헤어 살롱',
     cat: 'SALON', catKo: '(상업) 살롱', loc: '—', locKo: '—', cover: 2, skip: [],
     dims: [[1600,1066],[1600,1066],[1600,1066],[1065,1600],[1065,1600],[1600,1066],[1600,1200],[1600,1200],[1600,1200]],
     txt: [
@@ -175,7 +142,7 @@ const PROJECTS = [
     ]
   },
   {
-    slug: 'doan', name: 'DOAN-DONG DUPLEX OFFICE', ko: '도안동 복층 사무실',
+    slug: 'doan', name: 'CO-WORKING OFFICE', ko: '공유오피스',
     cat: 'OFFICE', catKo: '(오피스)', loc: 'DAEJEON', locKo: '대전', cover: 2, skip: [],
     dims: [[1600,1200],[1600,901]],
     txt: [

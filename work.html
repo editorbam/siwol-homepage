@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>WORK — SIWOL 10月</title>
+
+<!-- ══ 검색·공유 층 ══════════════════════════════════════════════
+     이 층은 브랜드 보이스(영문 우선)와 분리한다. 읽는 쪽이 사람이 아니라
+     검색엔진·메신저 미리보기라서, 한국어로 평범하게 쓴다.
+     배포지 = https://editorbam.github.io/siwol-homepage/ (8/4 확정, 공유본을 E안으로 교체).
+     ⚠️ 나중에 자체 도메인으로 옮기면 아래 절대주소 3곳(canonical·og:url·og:image)과
+        JSON-LD의 url·image를 함께 바꿀 것.
+     ⚠️ 네이버 서치어드바이저 소유확인 메타는 네이버가 발급하는 값이라 비워 뒀다.
+        사이트 등록 후 받은 <meta name="naver-site-verification"> 한 줄을 여기 붙일 것. -->
+<!-- ⚠️ 아직 시안이라 검색엔진 색인을 막아 둔다. 링크를 아는 사람은 그대로 볼 수 있다.
+     정식 배포 때 이 robots 한 줄을 지울 것 — 지우지 않으면 검색에 영원히 안 잡힌다. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="대전 상업공간 인테리어 디자인 스튜디오 10月(시월)의 전체 작업 목록.">
+<link rel="canonical" href="https://editorbam.github.io/siwol-homepage/work.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SIWOL 10月">
+<meta property="og:title" content="WORK — 10月 인테리어 디자인">
+<meta property="og:description" content="대전 상업공간 인테리어 디자인. 음식점·바·리테일·살롱·사무실 실내 작업 기록.">
+<meta property="og:url" content="https://editorbam.github.io/siwol-homepage/work.html">
+<!-- 카톡·메신저 미리보기 그림 = 흰 바탕 워드마크.
+     ⚠️ 카카오는 미리보기를 **주소 기준으로 캐시**한다. 그림을 바꿀 땐 내용만 갈아끼우지 말고
+        파일명을 반드시 새로 줄 것 — 같은 이름이면 예전 그림이 계속 뜬다. -->
+<meta property="og:image" content="https://editorbam.github.io/siwol-homepage/img/og-mark.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="10月 — INTERIOR DESIGN">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="img/favicon-a.svg" type="image/svg+xml">
+<meta name="theme-color" content="#000000">
+
+<!-- ══ 검색·공유 층 끝 ══════════════════════════════════════════ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@300;400&family=IBM+Plex+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+
+<!-- 인트로 — 홈에서 이미 봤으면(세션) 즉시 제거된다 -->
+<div id="intro" aria-hidden="true">
+  <div class="ring"><span>LOADING...</span></div>
+  <div class="bar"><i></i></div>
+  <div class="pct br"><span>0%</span></div>
+  <div class="credit">INTERIOR DESIGN BY SIWOL 10月</div>
+</div>
+<div id="tr"></div>
+<div id="c"><span></span></div>
+
+<!-- 이 페이지엔 #nojs 안전망을 두지 않는다 — 아래 정적 본문에 상호·연락처가 이미 들어 있고,
+     인트로 막(z 9998)이 #nojs(z 9997)보다 위라 막이 걷히기 전엔 어차피 보이지도 않는다.
+     project.html 은 아직 JS 전용이라 거기엔 남겨 둔다. -->
+
+<nav id="n">
+  <div id="n-lo"><a href="index.html" data-c="[HOME]">10月</a></div>
+  <ul id="n-me"></ul>
+  <ul id="n-la"></ul>
+</nav>
+
+<div id="f">
+  <div id="f-l"></div>
+  <div id="f-c"></div>
+  <div id="f-r"></div>
+</div>
+
+<!-- 작업 목록 페이지 — 홈 콜라주(index.html)와 상세(project.html) 사이. 8/25 홈에서 분리.
+     ══ 정적 본문 ══════════════════════════════════════════════════
+     아래 s:키 로 시작하고 /s:키 로 끝나는 주석 쌍 사이는 tools/build-static.js 가
+     js/data.js 를 읽어 자동으로 찍는다.
+     손으로 고치지 말 것 — 카피는 data.js 에서 고치고 `node tools/build-static.js`.
+
+     왜 두는가: 이 사이트는 본문을 전부 JS가 그린다. 사람 브라우저는 JS를 돌리니 문제없지만,
+     네이버 크롤러는 대체로 JS를 돌리지 않아 빈 페이지로 읽고 간다.
+     아래 글은 그 크롤러 몫이다. JS가 오면 같은 자리를 innerHTML로 덮어쓰므로
+     사람이 보는 화면은 달라지지 않는다.
+
+     ⚠️ 이 주석 안에 주석 여는/닫는 기호를 그대로 쓰면 안 된다. HTML 주석은 중첩이 안 돼서
+        거기서 주석이 끊기고, 뒤에 적은 메모가 페이지 본문으로 새어 나온다(한 번 겪음).
+     ══════════════════════════════════════════════════════════════ -->
+<main>
+  <section id="idx">
+    <div id="idx-hd"></div>
+    <ul><!--s:idx-list--><li><a href="project.html?p=daehwa-garden"><span>01</span> <span>CHARCOAL GRILL HOUSE</span> <span lang="ko">숯불갈비집</span> <span>F&amp;B</span> <span lang="ko">(상업) F&amp;B</span> <span>DAEJEON</span> <span lang="ko">대전</span></a></li><li><a href="project.html?p=daehwa-sanjang"><span>02</span> <span>CHARCOAL GRILL HOUSE</span> <span lang="ko">숯불구이집</span> <span>F&amp;B</span> <span lang="ko">(상업) F&amp;B</span> <span>GYEONGJU</span> <span lang="ko">경주</span></a></li><li><a href="project.html?p=masta"><span>03</span> <span>IZAKAYA</span> <span lang="ko">이자카야</span> <span>BAR</span> <span lang="ko">(상업) 바</span> <span>—</span></a></li><li><a href="project.html?p=daehwaro"><span>04</span> <span>CHARCOAL GRILL HOUSE</span> <span lang="ko">숯불구이집</span> <span>F&amp;B</span> <span lang="ko">(상업) F&amp;B</span> <span>DAEJEON</span> <span lang="ko">대전</span></a></li><li><a href="project.html?p=sgood"><span>05</span> <span>CAFE</span> <span lang="ko">카페</span> <span>CAFE</span> <span lang="ko">(상업) 카페</span> <span>—</span></a></li><li><a href="project.html?p=cherry"><span>06</span> <span>LIQUOR SHOP</span> <span lang="ko">주류샵</span> <span>SHOP</span> <span lang="ko">(상업) 리테일</span> <span>GYEONGJU</span> <span lang="ko">경주</span></a></li><li><a href="project.html?p=bubas"><span>07</span> <span>GABLE-ROOF SHOP</span> <span lang="ko">박공 지붕 매장</span> <span>SHOP</span> <span lang="ko">(상업) 리테일</span> <span>—</span></a></li><li><a href="project.html?p=kuriju"><span>08</span> <span>HAIR SALON</span> <span lang="ko">헤어 살롱</span> <span>SALON</span> <span lang="ko">(상업) 살롱</span> <span>—</span></a></li><li><a href="project.html?p=doan"><span>09</span> <span>CO-WORKING OFFICE</span> <span lang="ko">공유오피스</span> <span>OFFICE</span> <span lang="ko">(오피스)</span> <span>DAEJEON</span> <span lang="ko">대전</span></a></li><!--/s:idx-list--></ul>
+  </section>
+  <div id="idx-th"><img alt=""></div>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+</body>
+</html>

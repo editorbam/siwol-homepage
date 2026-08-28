@@ -573,9 +573,11 @@ function setProjectMeta(p) {
 
 /* ── 공통 네비 · 푸터 ───────────────────────────────────────── */
 function renderChrome() {
-  const L = t(), home = $('#p1') ? 'index.html' : '';
+  const L = t(), home = $('#ho') ? '' : 'index.html';
+  /* WORK는 8/25부터 별도 페이지(work.html). STUDIO·CONTACT는 홈 안의 앵커 */
+  const dest = ['work.html', home + '#ab', home + '#co'];
   $('#n-me').innerHTML = T.en.nav.map((s, i) =>
-    `<li><a href="${home}#${['idx','ab','co'][i]}" data-c="[GO]">${bi(s, T.ko.nav[i], 1)}</a></li>`).join('');
+    `<li><a href="${dest[i]}" data-c="[GO]">${bi(s, T.ko.nav[i], 1)}</a></li>`).join('');
   $('#n-la').innerHTML =
     `<li><button class="br" id="lang-en" data-c="[EN]">${tx('EN')}</button></li>` +
     `<li><button class="br" id="lang-ko" data-c="[KO]">${tx('KO')}</button></li>`;
@@ -607,24 +609,9 @@ function setLang(l) {
   }});
 }
 
-/* ── 홈 ─────────────────────────────────────────────────────── */
-function renderHome() {
-  if (!$('#ho')) return;
-  const L = t();
-
-  $('#ho-ti').innerHTML =
-    `<span class="ars"><i class="ar"></i><i class="ar"></i><i class="ar"></i></span>` +
-    `<b>${bi(T.en.heroA, T.ko.heroA)}</b>` + bi(T.en.heroB, T.ko.heroB) + bi(T.en.heroC, T.ko.heroC);
-
-  $('#ho > ul').innerHTML = PROJECTS.map((p, i) => {
-    const n = p.cover, d = dim(p, n);
-    return `<li class="ho-li"><figure>
-      <a href="project.html?p=${p.slug}" data-c="[VIEW]" data-fade data-img>
-        <img src="${src(p, n)}" ${rs(p, n, HO_VW[i % 13])} alt="${nm(p)}" loading="lazy" width="${d[0]}" height="${d[1]}"></a>
-      <figcaption>[${pad(i + 1)}] ${isKo() ? p.ko : p.name} — ${isKo() ? p.catKo : p.cat}
-        <em>${isKo() ? p.name : p.ko} — ${isKo() ? p.cat : p.catKo}</em></figcaption></figure></li>`;
-  }).join('');
-
+/* ── 작업 목록(work.html) ───────────────────────────────────── */
+function renderIndex() {
+  if (!$('#idx')) return;
   $('#idx-hd').innerHTML =
     `<div>${bi(T.en.idxHd[0], T.ko.idxHd[0], 1)} &nbsp; ${bi(T.en.idxHd[1], T.ko.idxHd[1])}</div>` +
     `<div><span class="br">${tx(String(PROJECTS.length))}</span></div>`;
@@ -645,6 +632,26 @@ function renderHome() {
     });
     a.addEventListener('mouseleave', () => th.classList.remove('on'));
   });
+
+}
+
+/* ── 홈 ─────────────────────────────────────────────────────── */
+function renderHome() {
+  if (!$('#ho')) return;
+  const L = t();
+
+  $('#ho-ti').innerHTML =
+    `<span class="ars"><i class="ar"></i><i class="ar"></i><i class="ar"></i></span>` +
+    `<b>${bi(T.en.heroA, T.ko.heroA)}</b>` + bi(T.en.heroB, T.ko.heroB) + bi(T.en.heroC, T.ko.heroC);
+
+  $('#ho > ul').innerHTML = PROJECTS.map((p, i) => {
+    const n = p.home || p.cover, d = dim(p, n); /* home: 홈 콜라주 전용 컷(상세 대표컷과 분리) */
+    return `<li class="ho-li"><figure>
+      <a href="project.html?p=${p.slug}" data-c="[VIEW]" data-fade data-img>
+        <img src="${src(p, n)}" ${rs(p, n, HO_VW[i % 13])} alt="${nm(p)}" loading="lazy" width="${d[0]}" height="${d[1]}"></a>
+      <figcaption>[${pad(i + 1)}] ${isKo() ? p.ko : p.name} — ${isKo() ? p.catKo : p.cat}
+        <em>${isKo() ? p.name : p.ko} — ${isKo() ? p.cat : p.catKo}</em></figcaption></figure></li>`;
+  }).join('');
 
   $('#ab').innerHTML =
     `<div id="ab-in">
@@ -703,9 +710,17 @@ function renderProject() {
     (k ? '<span class="dot">·<br>·</span>' : '') +
     biP(s, p.txtKo[k], 'tx-p-' + Math.min(k + 1, 6))).join('');
 
+  /* heroWide(data.js) — 대표컷을 텍스트 아래 가운데로 눕히는 배치.
+     폭이 두 배로 커지므로 srcset 계산에 넘기는 폭도 같이 바꿔야 흐린 그림이 안 나온다 */
+  const heroVw = p.heroWide ? 70.8328 : 35.4164;
+  $('.p1-ba').classList.toggle('is-hw', !!p.heroWide);
+
   $('#p1-hero').innerHTML =
-    `<span data-fade data-img><img src="${src(p, c)}" ${rs(p, c, 35.4164)} alt="${nm(p)}" width="${dim(p, c)[0]}" height="${dim(p, c)[1]}"></span>` +
-    `<figcaption>[${pad(c)}] ${bi(p.name, p.ko)}</figcaption>`;
+    `<span data-fade data-img><img src="${src(p, c)}" ${rs(p, c, heroVw)} alt="${nm(p)}" width="${dim(p, c)[0]}" height="${dim(p, c)[1]}"></span>` +
+    `<figcaption>[${pad(c)}] ${bi(p.name, p.ko)}` +
+    /* coverNote — 대표컷 한 줄 설명(선택, data.js). 8/25 대화 산장부터 */
+    (p.coverNote ? `<span class="p1-note">${bi(p.coverNote[0], p.coverNote[1])}</span>` : '') +
+    `</figcaption>`;
 
   const xs = ['left', 'right', 'center'];
   const ws = [41.6664, 24.9998, 33.3331, 18.7499, 47.9164];
@@ -737,7 +752,7 @@ function renderProject() {
 
 /* ── 부팅 ───────────────────────────────────────────────────── */
 function renderAll() {
-  renderChrome(); renderHome(); renderProject();
+  renderChrome(); renderHome(); renderIndex(); renderProject();
   const nj = $('#nojs'); if (nj) nj.remove();   // 여기까지 왔으면 정적 안전망은 필요 없다
 }
 

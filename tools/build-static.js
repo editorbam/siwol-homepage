@@ -20,6 +20,7 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const DATA = path.join(ROOT, 'js', 'data.js');
 const PAGE = path.join(ROOT, 'index.html');
+const WORK = path.join(ROOT, 'work.html');   // 8/25 작업 목록 분리 — idx-list 는 이쪽에 찍는다
 
 /* data.js 는 모듈이 아니라 전역 선언 파일이라, 함수 안에서 실행하고 값만 돌려받는다.
    정규식으로 긁으면 카피에 대괄호·따옴표가 섞일 때 깨진다. */
@@ -70,17 +71,19 @@ B['co'] =
   `<p>${bi(T.en.place.join(', '), T.ko.place.join(', '))} · ${esc(T.en.copy)}</p>`;
 
 /* ── 주입 ─────────────────────────────────────────────────── */
-let html = fs.readFileSync(PAGE, 'utf8');
+const PAGE_OF = key => key === 'idx-list' ? WORK : PAGE;
+const pages = { [PAGE]: fs.readFileSync(PAGE, 'utf8'), [WORK]: fs.readFileSync(WORK, 'utf8') };
 let n = 0;
 for (const [key, body] of Object.entries(B)) {
+  const file = PAGE_OF(key);
   const re = new RegExp(`(<!--s:${key}-->)[\\s\\S]*?(<!--/s:${key}-->)`);
-  if (!re.test(html)) { console.error(`✗ index.html 에 <!--s:${key}--> 자리가 없습니다`); process.exit(1); }
+  if (!re.test(pages[file])) { console.error(`✗ ${path.basename(file)} 에 <!--s:${key}--> 자리가 없습니다`); process.exit(1); }
   /* 함수 형태로 넣는다 — 문자열로 넘기면 카피 안의 $& $1 $` 같은 게 치환 기호로 해석돼
      본문이 조용히 망가진다(금액 표기에 $ 하나만 들어가도). */
-  html = html.replace(re, (m, open, close) => open + body + close);
+  pages[file] = pages[file].replace(re, (m, open, close) => open + body + close);
   n++;
 }
-fs.writeFileSync(PAGE, html);
+for (const [file, html] of Object.entries(pages)) fs.writeFileSync(file, html);
 
 const chars = Object.values(B).join('').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().length;
 console.log(`정적 본문 ${n}자리 갱신 · 글자 ${chars}자 (크롤러가 읽게 될 분량)`);
