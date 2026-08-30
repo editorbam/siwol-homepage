@@ -341,6 +341,7 @@ main > #idx:first-child { padding-top: 16.6666vw; }
 #rg-l { width: 8.33328vw; font-size: var(--fx); display: flex; column-gap: .69444vw; align-items: flex-start; }
 #rg-l .sq { top: .3em; }
 #rg-map { width: 47.9164vw; height: auto; display: block; font-family: inherit; overflow: visible; }
+#rg-map .ld path { fill: rgba(0,0,0,.045); stroke: rgba(0,0,0,.28); stroke-width: .45; stroke-linejoin: round; }
 #rg-map .gr line { stroke: rgba(0,0,0,.14); stroke-width: .5; }
 #rg-map .gr text { font-size: 5.5px; fill: var(--dim); }
 #rg-map .pt rect { fill: #000; }

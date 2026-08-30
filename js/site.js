@@ -670,10 +670,11 @@ function renderHome() {
       T.en.abFlow.map((s, i) => `<li>${bi(s, T.ko.abFlow[i], 1)}</li>`).join('') + `</ol>`;
 
   /* 시공지역 — 경위도 격자 위의 점. 해안선 없이 좌표만(푸터 [36°21'N] 문법 상속). 8/30 */
-  const X = lon => (lon - 126) * 80, Y = lat => (38.4 - lat) * 100;   // viewBox 0 0 304 360
+  const X = lon => (lon - 125.9) * 80, Y = lat => (38.6 - lat) * 100;   // viewBox 0 0 320 460 — js/map-kr.js와 같은 투영
   let grid = '';
-  for (let lon = 126; lon <= 129.8; lon++) grid += `<line x1="${X(lon)}" y1="0" x2="${X(lon)}" y2="360"/><text x="${X(lon) + 3}" y="356">${lon}°E</text>`;
-  for (let lat = 35; lat <= 38.4; lat++) grid += `<line x1="0" y1="${Y(lat)}" x2="304" y2="${Y(lat)}"/><text x="3" y="${Y(lat) - 3}">${lat}°N</text>`;
+  for (let lon = 126; lon <= 129.9; lon++) grid += `<line x1="${X(lon)}" y1="0" x2="${X(lon)}" y2="460"/><text x="${X(lon) + 3}" y="456">${lon}°E</text>`;
+  for (let lat = 35; lat <= 38.6; lat++) grid += `<line x1="0" y1="${Y(lat)}" x2="320" y2="${Y(lat)}"/><text x="3" y="${Y(lat) - 3}">${lat}°N</text>`;
+  const land = (typeof KR_MAP !== 'undefined') ? KR_MAP.map(d => `<path d="${d}"/>`).join('') : '';
   const pts = REGIONS.map(r => {
     const x = X(r.lon), y = Y(r.lat), rt = r.lb === 'r';
     return `<rect x="${x - 2.5}" y="${y - 2.5}" width="5" height="5"/>` +
@@ -681,8 +682,8 @@ function renderHome() {
   }).join('');
   $('#rg').innerHTML =
     `<div id="rg-l"><span class="sq"></span>${bi(T.en.rgL, T.ko.rgL)}</div>
-     <svg id="rg-map" viewBox="0 0 304 360" aria-label="${isKo() ? '시공지역 지도' : 'Regions map'}">
-       <g class="gr">${grid}</g><g class="pt">${pts}</g></svg>
+     <svg id="rg-map" viewBox="0 0 320 460" aria-label="${isKo() ? '시공지역 지도' : 'Regions map'}">
+       <g class="ld">${land}</g><g class="gr">${grid}</g><g class="pt">${pts}</g></svg>
      <div id="rg-r">
        <ul>` + REGIONS.map(r =>
         `<li><span class="k">${bi(r.en, r.ko, 1)}</span><span class="v">${tx('[' + r.co[0] + ']')} ${tx('[' + r.co[1] + ']')}</span></li>`).join('') +
