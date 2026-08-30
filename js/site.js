@@ -294,9 +294,9 @@ function playMap(o, delay) {
         const c = l.ch.length, dur = clamp(c * 40, 300, c * 100);
         let last = -1;
         tween({
-          d: dur, de: 140 * i, e: EASE.tx,
+          d: dur, de: 140 * (i >> 1) + (i & 1) * 100, e: EASE.tx,   // 영문·한글 한 쌍씩
           u: pr => {
-            if (last < 0) o.pts[i].style.opacity = '';
+            if (last < 0) o.pts[i >> 1].style.opacity = '';
             const v = Math.floor(pr * c); if (v === last) return; last = v;
             l.t.textContent = scramble(l.ch, v, Math.min(c - v, Math.max(1, Math.round(c * .3))));
           },
@@ -720,7 +720,8 @@ function renderHome() {
   const pts = REGIONS.map(r => {
     const x = X(r.lon), y = Y(r.lat), rt = r.lb === 'r';
     return `<rect x="${x - 2.5}" y="${y - 2.5}" width="5" height="5"/>` +
-      `<text class="nm" x="${rt ? x + 7 : x - 7}" y="${y + 3}" text-anchor="${rt ? 'start' : 'end'}">${isKo() ? r.ko : r.en}</text>`;
+      `<text class="nm" x="${rt ? x + 7 : x - 7}" y="${y + 3}" text-anchor="${rt ? 'start' : 'end'}">${isKo() ? r.ko : r.en}</text>` +
+      `<text class="nm nm2" x="${rt ? x + 7 : x - 7}" y="${y + 11}" text-anchor="${rt ? 'start' : 'end'}">${isKo() ? r.en : r.ko}</text>`;
   }).join('');
   $('#rg').innerHTML =
     `<div id="rg-l"><span class="sq"></span>${bi(T.en.rgL, T.ko.rgL)}</div>

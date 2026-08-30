@@ -347,6 +347,7 @@ main > #idx:first-child { padding-top: 16.6666vw; }
 #rg-map .gr text { font-size: 5.5px; fill: var(--dim); }
 #rg-map .pt rect { fill: #000; }
 #rg-map .pt .nm { font-size: 7px; fill: #000; }
+#rg-map .pt .nm2 { font-size: 6px; fill: #6a6a6a; }
 #rg-r { width: 18.7499vw; font-size: var(--fx); line-height: 1.6; }
 #rg-r ul { list-style: none; margin: 0; padding: 0; }
 #rg-r li { display: flex; justify-content: space-between; align-items: flex-start; padding: .69444vw 0; border-bottom: .069444vw solid rgba(0,0,0,.18); }
