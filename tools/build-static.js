@@ -69,7 +69,7 @@ B['co'] =
   `<li>${bi(T.en.coK[2], T.ko.coK[2])} <a href="${STUDIO.instaUrl}" rel="noopener">${esc(STUDIO.insta)}</a></li>` +
   `</ul>` +
   `<p>${keepBr(T.en.coR)}</p><p lang="ko">${keepBr(T.ko.coR)}</p>` +
-  `<p>${bi(T.en.place.join(', '), T.ko.place.join(', '))} · ${esc(T.en.copy)}</p>`;
+  `<p>${esc(T.en.copy)}</p>`;
 
 /* ── 주입 ─────────────────────────────────────────────────── */
 const PAGE_OF = key => key === 'idx-list' ? WORK : PAGE;

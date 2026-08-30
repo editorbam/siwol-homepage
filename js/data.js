@@ -186,7 +186,7 @@ const T = {
     coK:   ['TEL', 'MAIL', 'INSTAGRAM'],
     coR:   'TELL US THE SCALE<br>AND THE DATE.<br>THAT IS ENOUGH<br>FOR A FIRST ANSWER.',
     copy:  '© 2026 DESIGN SIWOL',
-    place: ['DAEJEON', 'KOREA'],
+    place: ['INCHEON', 'GIMPO', 'GYEONGGI', 'DAEJEON', 'CHEONGJU', 'GYEONGJU'],
     p1:    ['PROJECT', 'TYPE', 'LOCATION', 'PREV. PROJECT', 'NEXT. PROJECT', 'NEXT PROJECT'],
     frames: n => n + ' FRAMES'
   },
@@ -212,7 +212,7 @@ const T = {
     coK:   ['전화', '이메일', '인스타그램'],
     coR:   '공사 규모와 일정만<br>알려주셔도 됩니다.<br>그거면 첫 답을<br>드릴 수 있습니다.',
     copy:  '© 2026 DESIGN SIWOL',
-    place: ['대전', '대한민국'],
+    place: ['인천', '김포', '경기', '대전', '청주', '경주'],
     p1:    ['프로젝트', '분류', '지역', '이전 프로젝트', '다음 프로젝트', '다음 프로젝트'],
     frames: n => n + '컷'
   }
