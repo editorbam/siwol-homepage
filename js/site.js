@@ -287,7 +287,7 @@ function playMap(o, delay) {
   o.band.setAttribute('opacity', '1');
   tween({
     d: 1400, de: delay, e: EASE.tx,
-    u: pr => { o.clip.setAttribute('width', String(320 * pr)); o.band.setAttribute('x', String(320 * pr - 7)); },
+    u: pr => { o.clip.setAttribute('width', String(320 * pr)); o.band.setAttribute('x', String(320 * pr - 2)); },
     cb: () => {
       o.band.setAttribute('opacity', '0');
       o.lbs.forEach((l, i) => {
@@ -727,7 +727,7 @@ function renderHome() {
      <svg id="rg-map" viewBox="0 0 320 460" aria-label="${isKo() ? '시공지역 지도' : 'Regions map'}">
        <defs><clipPath id="rg-clip" clipPathUnits="userSpaceOnUse"><rect id="rg-clipr" x="0" y="0" width="320" height="460"/></clipPath></defs>
        <g class="ld" clip-path="url(#rg-clip)">${land}</g><g class="gr" clip-path="url(#rg-clip)">${grid}</g>
-       <rect id="rg-band" x="-8" y="0" width="7" height="460" fill="#000" opacity="0"/>
+       <rect id="rg-band" x="-3" y="0" width="2" height="460" fill="#000" opacity="0"/>
        <g class="pt">${pts}</g></svg>
      <div id="rg-r">
        <ul>` + REGIONS.map(r =>
