@@ -33,12 +33,12 @@ const PROJECTS = [
     txt: [
       'A MOUNTAIN LODGE PUT ON A CITY STREET. THE FACADE IS BUILT OUT OF SPLIT FIREWOOD, STACKED CUT-END OUT, RUNNING THE FULL WIDTH OF THE SHOPFRONT.',
       'THE SIGN IS CARVED IN HANJA AND LIT FROM UNDER THE EAVE. AT NIGHT THE TIMBER READS AS A TEXTURE, NOT A DECORATION.',
-      'INSIDE, THE TABLETOPS ARE STONE LEFT WITH A BROKEN EDGE. LIGHT IS DROPPED IN NARROW POOLS — ONE VESSEL ON A SHELF IS LIT LIKE AN OBJECT IN A CASE, AND EVERYTHING AROUND IT IS ALLOWED TO GO DARK.'
+      'THE BAR TABLE IS STONE, BURNED AND CARVED BY HAND. LIGHT IS DROPPED IN NARROW POOLS — ONE VESSEL ON A SHELF IS LIT LIKE AN OBJECT IN A CASE, AND EVERYTHING AROUND IT IS ALLOWED TO GO DARK.'
     ],
     txtKo: [
       '도심 길가에 올려놓은 산장. 파사드는 쪼갠 장작을 단면이 보이게 쌓아 매장 폭 전체를 채웠다.',
       '간판은 한자를 새기고 처마 밑에서 비춘다. 밤이 되면 장작은 장식이 아니라 질감으로 읽힌다.',
-      '안쪽 상판은 깨진 단면을 그대로 둔 석재. 빛은 좁은 웅덩이로만 떨어진다. 선반 위 그릇 하나가 진열장 속 물건처럼 조명을 받고, 그 주변은 어두워지도록 놔뒀다.'
+      '석재를 태우고 직접 깎아서 만든 바 테이블. 빛은 좁은 웅덩이로만 떨어진다. 선반 위 그릇 하나가 진열장 속 물건처럼 조명을 받고, 그 주변은 어두워지도록 놔뒀다.'
     ]
   },
   {
