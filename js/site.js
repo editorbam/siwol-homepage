@@ -416,6 +416,8 @@ function initTransition() {
       e.preventDefault();
       const el = $(href);
       if (el) scrollToY(el.getBoundingClientRect().top + (sOn ? sCur : scrollY));
+      /* 주소에 #구역을 남긴다 — 새로고침·공유 때 그 자리로 돌아오게 (8/30) */
+      try { history.replaceState(null, '', href); } catch (e2) {}
       return;
     }
     e.preventDefault();
@@ -829,9 +831,22 @@ function renderAll() {
 /* 주소 끝의 #ab·#co 로 실제로 내려간다.
    본문을 JS가 그리므로 브라우저가 해시를 풀 때는 그 자리가 아직 비어 있다 —
    그대로 두면 프로젝트 페이지에서 STUDIO·CONTACT를 눌러도 홈 맨 위에 떨어진다. */
+/* 새로고침 위치 복원 (8/30) — 해시가 없을 때는 마지막 스크롤 위치로. 값은 페이지별 sessionStorage. */
+const POS_KEY = 'siwol-pos:' + location.pathname;
+function savePos() { try { sessionStorage.setItem(POS_KEY, String(Math.round(sOn ? sCur : scrollY))); } catch (e) {} }
+function jumpToY(y) {
+  const max = document.body.scrollHeight - innerHeight;
+  y = clamp(y, 0, max);
+  if (sOn) { sCur = sTarget = y; }
+  scrollTo(0, y);
+}
 function honorHash() {
   const h = location.hash;
-  if (!h || h.length < 2) return;
+  if (!h || h.length < 2) {
+    let y = 0; try { y = +sessionStorage.getItem(POS_KEY) || 0; } catch (e) {}
+    if (y > 0) jumpToY(y);
+    return;
+  }
   let el = null;
   try { el = $(h); } catch (e) { return; }       // 해시가 선택자로 못 쓰는 문자열일 수 있다
   if (el) scrollToY(el.getBoundingClientRect().top + (sOn ? sCur : scrollY));
@@ -848,6 +863,8 @@ addEventListener('DOMContentLoaded', () => {
   initScroll();
   initTransition();
   startRaf();
+  addEventListener('pagehide', savePos);
+  addEventListener('scroll', () => { clearTimeout(savePos._t); savePos._t = setTimeout(savePos, 150); }, { passive: true });
   const go = () => { collect(document); initIntro(() => { initReveal(); honorHash(); }); };
   /* .then(go).catch(go)로 쓰면 go() 자신이 던진 예외를 catch가 받아 go()를 한 번 더 돌린다
      (관찰자·리빌 중복). 두 인자 형태여야 폰트 대기 실패만 받는다. */
