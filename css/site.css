@@ -340,7 +340,8 @@ main > #idx:first-child { padding-top: 16.6666vw; }
       padding: var(--u3) var(--u) var(--u3); }
 #rg-l { width: 8.33328vw; font-size: var(--fx); display: flex; column-gap: .69444vw; align-items: flex-start; }
 #rg-l .sq { top: .3em; }
-#rg-map { width: 47.9164vw; height: auto; display: block; font-family: inherit; overflow: visible; }
+#rg-map { height: 72vh; width: auto; max-width: 47.9164vw; display: block; font-family: inherit; overflow: visible; }
+#rg-map .pt rect { transition: opacity .2s; }
 #rg-map .ld path { fill: rgba(0,0,0,.045); stroke: rgba(0,0,0,.28); stroke-width: .45; stroke-linejoin: round; }
 #rg-map .gr line { stroke: rgba(0,0,0,.14); stroke-width: .5; }
 #rg-map .gr text { font-size: 5.5px; fill: var(--dim); }
@@ -464,7 +465,7 @@ main > #idx:first-child { padding-top: 16.6666vw; }
   #ab-in, #co, #rg { display: block; }
   #ab-tx, #ab-r, #co-li, #co-r, #rg-map, #rg-r { width: 100%; }
   #ab-l, #co-l, #rg-l { padding-bottom: 20px; }
-  #rg-map { max-width: 420px; margin-bottom: 20px; }
+  #rg-map { height: auto; max-width: 420px; margin-bottom: 20px; }
   #rg-r .v { white-space: normal; text-align: right; max-width: 55%; }
   #ab-flow { flex-direction: column; row-gap: 10px; }
   #ab-flow li { column-gap: 10px; }

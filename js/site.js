@@ -267,9 +267,50 @@ function playFade(o, delay) {
 /* ══════════════════════════════════════════════════════════════
    리빌 스케줄 — 화면에 들어오는 순서대로, 25ms씩 밀며
    ══════════════════════════════════════════════════════════════ */
+/* ── 지도 리빌 (8/30) — 글자와 같은 손짓: 왼쪽에서 폭이 열리고, 열리는 앞머리에 검정 띠.
+   끝나면 점·지명이 글자 리빌(블록 글리프 띠)로 하나씩 켜진다. ── */
+function prepMap(el) {
+  if (el.__mp) return el.__mp;
+  const o = { el, done: false, skip: REDUCED,
+    clip: el.querySelector('#rg-clipr'), band: el.querySelector('#rg-band'),
+    pts: $$('.pt rect', el), lbs: $$('.pt .nm', el).map(t => ({ t, raw: t.textContent, ch: Array.from(t.textContent) })) };
+  el.__mp = o;
+  if (o.skip) return o;
+  o.clip.setAttribute('width', '0');
+  o.pts.forEach(r => r.style.opacity = '0');
+  o.lbs.forEach(l => l.t.textContent = '');
+  return o;
+}
+function playMap(o, delay) {
+  if (o.done) return; o.done = true;
+  if (o.skip) return;
+  o.band.setAttribute('opacity', '1');
+  tween({
+    d: 1400, de: delay, e: EASE.tx,
+    u: pr => { o.clip.setAttribute('width', String(320 * pr)); o.band.setAttribute('x', String(320 * pr - 7)); },
+    cb: () => {
+      o.band.setAttribute('opacity', '0');
+      o.lbs.forEach((l, i) => {
+        const c = l.ch.length, dur = clamp(c * 40, 300, c * 100);
+        let last = -1;
+        tween({
+          d: dur, de: 140 * i, e: EASE.tx,
+          u: pr => {
+            if (last < 0) o.pts[i].style.opacity = '';
+            const v = Math.floor(pr * c); if (v === last) return; last = v;
+            l.t.textContent = scramble(l.ch, v, Math.min(c - v, Math.max(1, Math.round(c * .3))));
+          },
+          cb: () => { l.t.textContent = l.raw; }
+        });
+      });
+    }
+  });
+}
+
 const REVEAL = [];
 function collect(root) {
   REVEAL.length = 0;
+  $$('#rg-map', root).forEach(el => REVEAL.push({ type: 'map', o: prepMap(el), el }));
   $$('.tx', root).forEach(el => REVEAL.push({ type: 'tx', o: prepTx(el), el }));
   /* 문단은 줄로 쪼개야 해서 따로 모은다. 재기 → 감추기 두 패스는 .tx 와 같은 이유로 나눈다.
      못 쪼갠 문단(모션감소·안쪽 태그 있음)은 종전대로 페이드로 넘긴다 — 아무 모션도 없는 것보단 낫다 */
@@ -288,6 +329,7 @@ function play(items, base) {
     const de = base + 25 * i;                      // 레퍼런스 스태거 25ms
     if (r.type === 'tx') playTx(r.o, de);
     else if (r.type === 'tp') playTxP(r.o, de);
+    else if (r.type === 'map') playMap(r.o, de);
     else playFade(r.o, de);
   });
 }
@@ -683,7 +725,10 @@ function renderHome() {
   $('#rg').innerHTML =
     `<div id="rg-l"><span class="sq"></span>${bi(T.en.rgL, T.ko.rgL)}</div>
      <svg id="rg-map" viewBox="0 0 320 460" aria-label="${isKo() ? '시공지역 지도' : 'Regions map'}">
-       <g class="ld">${land}</g><g class="gr">${grid}</g><g class="pt">${pts}</g></svg>
+       <defs><clipPath id="rg-clip" clipPathUnits="userSpaceOnUse"><rect id="rg-clipr" x="0" y="0" width="320" height="460"/></clipPath></defs>
+       <g class="ld" clip-path="url(#rg-clip)">${land}</g><g class="gr" clip-path="url(#rg-clip)">${grid}</g>
+       <rect id="rg-band" x="-8" y="0" width="7" height="460" fill="#000" opacity="0"/>
+       <g class="pt">${pts}</g></svg>
      <div id="rg-r">
        <ul>` + REGIONS.map(r =>
         `<li><span class="k">${bi(r.en, r.ko, 1)}</span><span class="v">${tx('[' + r.co[0] + ']')} ${tx('[' + r.co[1] + ']')}</span></li>`).join('') +
