@@ -335,7 +335,9 @@ function play(items, base) {
 }
 function initReveal() {
   const vh = innerHeight;
-  const first = REVEAL.filter(r => r.el.getBoundingClientRect().top < vh * .95);
+  /* 고정된 네비·푸터(#n·#f)는 화면 위치가 변하지 않아 관찰자가 영영 안 잡는다 — 처음에 바로 연다.
+     (폰에서 푸터 좌표가 "[    ] [    ]" 빈 괄호로 남던 원인, 8/30) */
+  const first = REVEAL.filter(r => r.el.closest('#n, #f') || r.el.getBoundingClientRect().top < vh * .95);
   const rest  = REVEAL.filter(r => !first.includes(r));
   play(first, 300);                                // 레퍼런스 기본 지연 300ms
 
