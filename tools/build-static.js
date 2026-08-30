@@ -58,7 +58,8 @@ B['ab'] =
   `<dl>` + T.en.abDl.map((d, i) =>
     `<dt>${bi(d[0], T.ko.abDl[i][0])}</dt><dd>${keepBr(d[1])} <span lang="ko">${keepBr(T.ko.abDl[i][1])}</span></dd>`
   ).join('') + `</dl>` +
-  `<p>${bi(T.en.abBig, T.ko.abBig)}</p>`;
+  `<p>${bi(T.en.abBig, T.ko.abBig)}</p>` +
+  `<ol>` + T.en.abFlow.map((s, i) => `<li>${bi(s, T.ko.abFlow[i])}</li>`).join('') + `</ol>`;
 
 B['co'] =
   `<h2>${bi(T.en.coL, T.ko.coL)}</h2>` +
