@@ -164,23 +164,23 @@ const PROJECTS = [
 /* ── 스튜디오 / UI 문구 ─────────────────────────────────────── */
 const T = {
   en: {
-    nav:   ['WORK', 'STUDIO', 'CONTACT'],
+    nav:   ['WORK', 'PROCESS', 'CONTACT'],
     idxHd: ['INDEX', 'ALL PROJECTS'],
     heroA: 'SIWOL 10月 — INTERIOR DESIGN',
     heroB: 'OCTOBER IS THE BEST MONTH OF THE YEAR.',
     heroC: 'WE BUILD ROOMS THAT HOLD THAT TEMPERATURE.',
-    abL:   'STUDIO',
-    /* 골든서클 — WHY(왜 이렇게 짓는가) → 조건 → HOW(어떻게) → WHAT(무엇을) */
+    abL:   'PROCESS',
+    /* 공사 진행과정 — 6단계 (8/30, STUDIO 글 대체) */
     ab: [
-      'A SHOP IS NOT JUDGED BY HOW IT LOOKS ON THE DAY IT OPENS. IT IS JUDGED BY WHETHER PEOPLE COME BACK. THAT IS THE ONLY BRIEF WE WORK TO.',
-      'MOST OF THE WORK IS FOOD, DRINK AND SMALL RETAIL. THESE ROOMS OPEN, TRADE, AND ARE USED HARD EVERY NIGHT — THAT CONSTRAINT DECIDES THE MATERIALS BEFORE TASTE DOES.',
-      'WE START FROM THE HOUR THE ROOM IS ACTUALLY BUSY, NOT NOON WITH NOBODY IN IT. WHERE THE QUEUE STANDS, WHERE THE STAFF TURNS, WHAT THE SEAT BY THE DOOR IS WORTH. LIGHT IS PLACED LAST AND MATTERS MOST.',
-      'DRAWINGS, FIT-OUT, SIGNAGE AND STYLING ARE HANDLED IN ONE LINE. IN A SHOP THE MOST EXPENSIVE ACCIDENT IS A DELAYED OPENING, AND A SCHEDULE USUALLY SLIPS AT THE POINT WHERE ONE TRADE HANDS OVER TO THE NEXT. WE REMOVED THAT POINT.'
+      '01 — CONSULTATION. TELL US THE SCALE AND THE OPENING DATE. WE READ THE SCHEDULE BACKWARDS FROM THAT DATE AND GIVE A FIRST ANSWER.',
+      '02 — SITE SURVEY. WE MEASURE THE ROOM AND CHECK WHAT IS ALREADY THERE — COLUMNS, PIPES, POWER, THE STREET OUTSIDE — BEFORE ANYTHING IS DRAWN.',
+      '03 — DRAWINGS AND ESTIMATE. PLAN, MATERIALS AND COST ARE FIXED TOGETHER. WHAT IS AGREED HERE IS WHAT GETS BUILT.',
+      '04 — DEMOLITION AND FIT-OUT. STRIP-OUT, STRUCTURE, ELECTRICAL AND PLUMBING, THEN FINISHES. ONE TEAM CARRIES IT THROUGH, SO NOTHING WAITS AT A HANDOVER.',
+      '05 — SIGNAGE AND STYLING. THE SIGN, THE LIGHTING, THE OBJECTS ON THE SHELF. THE LAST LAYER, AND THE ONE THE STREET SEES FIRST.',
+      '06 — OPENING. WE HAND OVER A ROOM READY TO TRADE ON THE DAY, AND STAY REACHABLE AFTER IT OPENS.'
     ],
-    abDl:  [['SERVICES','DESIGN · FIT-OUT<br>SIGNAGE · STYLING'],
-            ['SECTORS','F&amp;B · BAR · SHOP<br>SALON · OFFICE'],
-            ['BASED IN','DAEJEON, KOREA']],
-    abBig: 'A ROOM YOU WANT TO STAY IN LONGER THAN YOU PLANNED.',
+    abDl:  [],
+    abBig: 'THE SCHEDULE IS COUNTED BACKWARDS FROM OPENING DAY.',
     coL:   'CONTACT',
     coK:   ['TEL', 'MAIL', 'INSTAGRAM'],
     coR:   'TELL US THE SCALE<br>AND THE DATE.<br>THAT IS ENOUGH<br>FOR A FIRST ANSWER.',
@@ -190,22 +190,22 @@ const T = {
     frames: n => n + ' FRAMES'
   },
   ko: {
-    nav:   ['작업', '스튜디오', '문의'],
+    nav:   ['작업', '공사 진행과정', '문의'],
     idxHd: ['색인', '전체 프로젝트'],
     heroA: '10月 — 인테리어 디자인',
     heroB: '일 년 중 가장 좋은 계절, 10월.',
     heroC: '그 온도로 머무는 공간을 짓습니다.',
-    abL:   '스튜디오',
+    abL:   '공사 진행과정',
     ab: [
-      '가게는 문 여는 날의 모습으로 평가받지 않습니다. 다시 오는가로 평가받습니다. 10月이 받는 주문서는 그것 하나입니다.',
-      '작업의 대부분은 먹고 마시는 곳과 작은 리테일입니다. 문을 열고, 장사를 하고, 매일 밤 험하게 쓰이는 방들입니다. 그 조건이 취향보다 먼저 재료를 정합니다.',
-      '가장 바쁜 시간의 그 방에서 시작합니다. 아무도 없는 정오가 아니라. 줄이 어디에 서는지, 직원이 어디서 도는지, 문 옆 자리가 얼마짜리인지. 빛은 가장 마지막에 놓고, 가장 중요합니다.',
-      '도면·시공·간판·스타일링을 한 줄에서 다룹니다. 상업 공간에서 가장 비싼 사고는 오픈이 밀리는 것이고, 일정이 밀리는 자리는 대개 사람이 바뀌는 지점입니다. 그 지점을 없앴습니다.'
+      '01 — 상담. 공사 규모와 오픈 날짜를 알려주시면 됩니다. 그 날짜에서 거꾸로 일정을 읽고 첫 답을 드립니다.',
+      '02 — 실측. 현장을 재고, 이미 있는 것을 확인합니다. 기둥, 배관, 전기, 바깥 길까지. 그다음에 그립니다.',
+      '03 — 도면·견적. 평면과 재료와 비용을 한 번에 정합니다. 여기서 합의한 것이 그대로 지어집니다.',
+      '04 — 철거·시공. 철거, 구조, 전기·설비, 마감 순으로 갑니다. 한 팀이 끝까지 가져가서 인수인계에서 기다리는 시간이 없습니다.',
+      '05 — 간판·스타일링. 간판, 조명, 선반 위의 물건. 마지막 층이자 길에서 가장 먼저 보이는 층입니다.',
+      '06 — 오픈. 그날 바로 장사할 수 있는 방으로 넘겨드리고, 문을 연 뒤에도 연락이 닿습니다.'
     ],
-    abDl:  [['업무','설계 · 시공<br>간판 · 스타일링'],
-            ['분야','F&amp;B · 바 · 리테일<br>살롱 · 오피스'],
-            ['기반','대전']],
-    abBig: '계획한 것보다 더 오래 머물고 싶어지는 방.',
+    abDl:  [],
+    abBig: '일정은 오픈 날짜에서 거꾸로 셉니다.',
     coL:   '문의',
     coK:   ['전화', '이메일', '인스타그램'],
     coR:   '공사 규모와 일정만<br>알려주셔도 됩니다.<br>그거면 첫 답을<br>드릴 수 있습니다.',
