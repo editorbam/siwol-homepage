@@ -842,14 +842,20 @@ function jumpToY(y) {
 }
 function honorHash() {
   const h = location.hash;
-  if (!h || h.length < 2) {
+  const target = () => {
+    if (h && h.length > 1) {
+      let el = null;
+      try { el = $(h); } catch (e) { return -1; }   // 해시가 선택자로 못 쓰는 문자열일 수 있다
+      return el ? el.getBoundingClientRect().top + scrollY : -1;
+    }
     let y = 0; try { y = +sessionStorage.getItem(POS_KEY) || 0; } catch (e) {}
-    if (y > 0) jumpToY(y);
-    return;
-  }
-  let el = null;
-  try { el = $(h); } catch (e) { return; }       // 해시가 선택자로 못 쓰는 문자열일 수 있다
-  if (el) scrollToY(el.getBoundingClientRect().top + (sOn ? sCur : scrollY));
+    return y > 0 ? y : -1;
+  };
+  /* 8/30 — 부드러운 스크롤 대신 바로 점프. 이미지가 늦게 들어와 위치가 밀리면 load 뒤에 한 번 더 맞춘다. */
+  const go = () => { const y = target(); if (y >= 0) jumpToY(y); };
+  go();
+  requestAnimationFrame(() => requestAnimationFrame(go));
+  if (document.readyState !== 'complete') addEventListener('load', () => setTimeout(go, 50), { once: true });
 }
 
 addEventListener('DOMContentLoaded', () => {
