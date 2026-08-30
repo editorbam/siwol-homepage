@@ -470,6 +470,7 @@ main > #idx:first-child { padding-top: 16.6666vw; }
   #rg-r .v { white-space: normal; text-align: right; max-width: 55%; }
   #ab-flow { flex-direction: column; row-gap: 10px; }
   #ab-flow li { column-gap: 10px; }
+  #ab-flow li:first-child { padding-left: calc(var(--ar) + 10px); }   /* 화살표 없는 첫 줄도 같은 들여쓰기 */
   #ab-r { padding-top: 30px; }
   #co-r { text-align: left; padding-top: 30px; }
   .p1-he, .p1-fo { position: relative; left: 0; width: 100%; box-sizing: border-box;
