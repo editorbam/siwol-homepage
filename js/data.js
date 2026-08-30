@@ -172,12 +172,12 @@ const T = {
     abL:   'PROCESS',
     /* 공사 진행과정 — 6단계 (8/30, STUDIO 글 대체) */
     ab: [
-      '01 — CONSULTATION. TELL US THE SCALE AND THE OPENING DATE. WE READ THE SCHEDULE BACKWARDS FROM THAT DATE AND GIVE A FIRST ANSWER.',
-      '02 — SITE SURVEY. WE MEASURE THE ROOM AND CHECK WHAT IS ALREADY THERE — COLUMNS, PIPES, POWER, THE STREET OUTSIDE — BEFORE ANYTHING IS DRAWN.',
-      '03 — DRAWINGS AND ESTIMATE. PLAN, MATERIALS AND COST ARE FIXED TOGETHER. WHAT IS AGREED HERE IS WHAT GETS BUILT.',
-      '04 — DEMOLITION AND FIT-OUT. STRIP-OUT, STRUCTURE, ELECTRICAL AND PLUMBING, THEN FINISHES. ONE TEAM CARRIES IT THROUGH, SO NOTHING WAITS AT A HANDOVER.',
-      '05 — SIGNAGE AND STYLING. THE SIGN, THE LIGHTING, THE OBJECTS ON THE SHELF. THE LAST LAYER, AND THE ONE THE STREET SEES FIRST.',
-      '06 — OPENING. WE HAND OVER A ROOM READY TO TRADE ON THE DAY, AND STAY REACHABLE AFTER IT OPENS.'
+      '01 — CONSULTATION. TELL US THE SCALE AND THE OPENING DATE. THAT IS ENOUGH FOR A FIRST ANSWER.',
+      '02 — SITE MEETING AND SURVEY. WE MEET YOU AT THE ROOM, MEASURE IT, AND CHECK WHAT IS ALREADY THERE — COLUMNS, PIPES, POWER, THE STREET OUTSIDE.',
+      '03 — FIRST ESTIMATE. SCOPE, MATERIALS AND COST IN ONE DOCUMENT, BASED ON THE SURVEY.',
+      '04 — REVISED ESTIMATE. WE ADJUST THE SCOPE AND THE NUMBERS TOGETHER UNTIL THEY FIT THE BUDGET AND THE DATE.',
+      '05 — CONTRACT. WHAT IS SIGNED HERE IS WHAT GETS BUILT.',
+      '06 — CONSTRUCTION. WORK BEGINS ON THE AGREED DATE.'
     ],
     abDl:  [],
     abBig: 'THE SCHEDULE IS COUNTED BACKWARDS FROM OPENING DAY.',
@@ -197,12 +197,12 @@ const T = {
     heroC: '그 온도로 머무는 공간을 짓습니다.',
     abL:   '공사 진행과정',
     ab: [
-      '01 — 상담. 공사 규모와 오픈 날짜를 알려주시면 됩니다. 그 날짜에서 거꾸로 일정을 읽고 첫 답을 드립니다.',
-      '02 — 실측. 현장을 재고, 이미 있는 것을 확인합니다. 기둥, 배관, 전기, 바깥 길까지. 그다음에 그립니다.',
-      '03 — 도면·견적. 평면과 재료와 비용을 한 번에 정합니다. 여기서 합의한 것이 그대로 지어집니다.',
-      '04 — 철거·시공. 철거, 구조, 전기·설비, 마감 순으로 갑니다. 한 팀이 끝까지 가져가서 인수인계에서 기다리는 시간이 없습니다.',
-      '05 — 간판·스타일링. 간판, 조명, 선반 위의 물건. 마지막 층이자 길에서 가장 먼저 보이는 층입니다.',
-      '06 — 오픈. 그날 바로 장사할 수 있는 방으로 넘겨드리고, 문을 연 뒤에도 연락이 닿습니다.'
+      '01 — 상담. 공사 규모와 오픈 날짜를 알려주시면 됩니다. 그거면 첫 답을 드릴 수 있습니다.',
+      '02 — 현장 미팅(실측). 현장에서 만나 재고, 이미 있는 것을 확인합니다. 기둥, 배관, 전기, 바깥 길까지.',
+      '03 — 1차 견적. 실측을 바탕으로 범위·재료·비용을 한 장에 정리해 드립니다.',
+      '04 — 2차 수정 견적. 예산과 날짜에 맞을 때까지 범위와 숫자를 함께 조정합니다.',
+      '05 — 계약. 여기서 서명한 것이 그대로 지어집니다.',
+      '06 — 착공. 약속한 날짜에 공사를 시작합니다.'
     ],
     abDl:  [],
     abBig: '일정은 오픈 날짜에서 거꾸로 셉니다.',
