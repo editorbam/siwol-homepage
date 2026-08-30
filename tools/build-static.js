@@ -25,7 +25,7 @@ const WORK = path.join(ROOT, 'work.html');   // 8/25 작업 목록 분리 — id
 /* data.js 는 모듈이 아니라 전역 선언 파일이라, 함수 안에서 실행하고 값만 돌려받는다.
    정규식으로 긁으면 카피에 대괄호·따옴표가 섞일 때 깨진다. */
 const src = fs.readFileSync(DATA, 'utf8');
-const { PROJECTS, T, STUDIO } = new Function(src + '\n; return { PROJECTS, T, STUDIO };')();
+const { PROJECTS, T, STUDIO, REGIONS } = new Function(src + '\n; return { PROJECTS, T, STUDIO, REGIONS };')();
 
 const esc = s => String(s).replace(/&(?!amp;|lt;|gt;|#)/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 /* data.js 일부 문자열엔 의도된 <br> 가 들어 있다. 그건 살린다. */
@@ -60,6 +60,11 @@ B['ab'] =
   ).join('') + `</dl>` +
   `<p>${bi(T.en.abBig, T.ko.abBig)}</p>` +
   `<ol>` + T.en.abFlow.map((s, i) => `<li>${bi(s, T.ko.abFlow[i])}</li>`).join('') + `</ol>`;
+
+B['rg'] =
+  `<h2>${bi(T.en.rgL, T.ko.rgL)}</h2><ul>` +
+  REGIONS.map(r => `<li>${bi(r.en, r.ko)} [${esc(r.co[0])}] [${esc(r.co[1])}]</li>`).join('') +
+  `</ul><p>${keepBr(T.en.rgR)}</p><p lang="ko">${keepBr(T.ko.rgR)}</p>`;
 
 B['co'] =
   `<h2>${bi(T.en.coL, T.ko.coL)}</h2>` +

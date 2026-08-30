@@ -216,8 +216,8 @@ figcaption em, #ab-r dd em { display: block; font-style: normal; color: var(--di
 #n-me { position: absolute; top: var(--u); left: 50%; transform: translateX(-50%);
         display: flex; justify-content: space-between; width: 45.833vw; box-sizing: border-box; }
 #n-me li { min-width: 6.24996vw; }
-#n-me li:nth-child(2) { text-align: center; }
-#n-me li:nth-child(3) { text-align: right; }
+#n-me li:nth-child(2), #n-me li:nth-child(3) { text-align: center; }
+#n-me li:last-child { text-align: right; }
 #n-la { position: absolute; top: var(--u); right: var(--u); display: flex; column-gap: .69444vw; }
 #n-la li { transition: opacity .3s; }
 #n-la li:hover ~ li { opacity: .3; }
@@ -335,6 +335,24 @@ main > #idx:first-child { padding-top: 16.6666vw; }
   border-width: calc(var(--ar)/2) 0 calc(var(--ar)/2) var(--ar); border-color: transparent transparent transparent #000; }
 #ab-big .a-b { color: #fff; background: #000; padding: .138888vw .208332vw .17361vw; }
 
+/* ── 시공지역 (8/30) — 컨택과 같은 3단(라벨 / 지도 / 목록) ── */
+#rg { position: relative; box-sizing: border-box; display: flex; justify-content: space-between; align-items: flex-start;
+      padding: var(--u3) var(--u) var(--u3); }
+#rg-l { width: 8.33328vw; font-size: var(--fx); display: flex; column-gap: .69444vw; align-items: flex-start; }
+#rg-l .sq { top: .3em; }
+#rg-map { width: 47.9164vw; height: auto; display: block; font-family: inherit; overflow: visible; }
+#rg-map .gr line { stroke: rgba(0,0,0,.14); stroke-width: .5; }
+#rg-map .gr text { font-size: 5.5px; fill: var(--dim); }
+#rg-map .pt rect { fill: #000; }
+#rg-map .pt .nm { font-size: 7px; fill: #000; }
+#rg-r { width: 18.7499vw; font-size: var(--fx); line-height: 1.6; }
+#rg-r ul { list-style: none; margin: 0; padding: 0; }
+#rg-r li { display: flex; justify-content: space-between; align-items: flex-start; padding: .69444vw 0; border-bottom: .069444vw solid rgba(0,0,0,.18); }
+#rg-r li:first-child { border-top: .069444vw solid #000; }
+#rg-r .k { opacity: .35; } #rg-r .v { white-space: nowrap; }
+#rg-r p { margin: 0; padding-top: var(--u); }
+#rg-r p .bi-b { display: block; padding-top: .7em; }
+
 /* ── 컨택 ───────────────────────────────────────────────────── */
 #co { position: relative; min-height: 66vh; box-sizing: border-box;
       display: flex; justify-content: space-between; align-items: flex-start;
@@ -423,8 +441,9 @@ main > #idx:first-child { padding-top: 16.6666vw; }
   :root { --u: 20px; --u2: 40px; --u3: 60px; --u4: 90px;
           --fs: 12px; --fm: 12px; --fx: 10px; --sq: 5px; --ar: 8px; }
   #n-lo { font-size: 15px; top: 18px; left: 20px; }
-  #n-me { width: auto; left: auto; right: 20px; transform: none; column-gap: 14px; }
+  #n-me { width: auto; left: auto; right: 20px; transform: none; column-gap: 12px; }
   #n-me li { min-width: 0; }
+  #n-me .bi-b { display: none; }   /* 8/30 메뉴 4개 — 폰에선 병기 줄을 접어 한 줄로 */
   #f-c, #f-r { display: none; }
   /* EN/KO — 폰에서 이 버튼이 없으면 한글로 돌릴 방법이 아예 없다.
      상단 우측은 메뉴가 이미 쓰고 있고(360px에서 남는 폭 76px, 토글 66px — 너무 빠듯),
@@ -441,9 +460,11 @@ main > #idx:first-child { padding-top: 16.6666vw; }
   #ho-ti { position: relative; top: 0; left: 0; padding-bottom: 30px; }
   #idx li a { grid-template-columns: 28px 1fr; row-gap: 4px; }
   #idx li a > .ca, #idx li a > .lo, #idx li a > .go { display: none; }
-  #ab-in, #co { display: block; }
-  #ab-tx, #ab-r, #co-li, #co-r { width: 100%; }
-  #ab-l, #co-l { padding-bottom: 20px; }
+  #ab-in, #co, #rg { display: block; }
+  #ab-tx, #ab-r, #co-li, #co-r, #rg-map, #rg-r { width: 100%; }
+  #ab-l, #co-l, #rg-l { padding-bottom: 20px; }
+  #rg-map { max-width: 420px; margin-bottom: 20px; }
+  #rg-r .v { white-space: normal; text-align: right; max-width: 55%; }
   #ab-flow { flex-direction: column; row-gap: 10px; }
   #ab-flow li { column-gap: 10px; }
   #ab-r { padding-top: 30px; }

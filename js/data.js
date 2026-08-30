@@ -161,10 +161,20 @@ const PROJECTS = [
   }
 ];
 
+/* ── 시공지역 — 지도 점·목록 (8/30). 좌표는 시청·도청 기준 근사값(표시용) ── */
+const REGIONS = [
+  { en: 'INCHEON',  ko: '인천', lat: 37.456, lon: 126.705, co: ["37°27'N", "126°42'E"], lb: 'l' },
+  { en: 'GIMPO',    ko: '김포', lat: 37.615, lon: 126.716, co: ["37°37'N", "126°43'E"], lb: 'r' },
+  { en: 'GYEONGGI', ko: '경기', lat: 37.263, lon: 127.029, co: ["37°16'N", "127°02'E"], lb: 'r' },
+  { en: 'DAEJEON',  ko: '대전', lat: 36.351, lon: 127.385, co: ["36°21'N", "127°23'E"], lb: 'l' },
+  { en: 'CHEONGJU', ko: '청주', lat: 36.642, lon: 127.489, co: ["36°38'N", "127°29'E"], lb: 'r' },
+  { en: 'GYEONGJU', ko: '경주', lat: 35.856, lon: 129.225, co: ["35°51'N", "129°13'E"], lb: 'l' }
+];
+
 /* ── 스튜디오 / UI 문구 ─────────────────────────────────────── */
 const T = {
   en: {
-    nav:   ['WORK', 'PROCESS', 'CONTACT'],
+    nav:   ['WORK', 'PROCESS', 'REGIONS', 'CONTACT'],
     idxHd: ['INDEX', 'ALL PROJECTS'],
     heroA: 'SIWOL 10月 — INTERIOR DESIGN',
     heroB: 'OCTOBER IS THE BEST MONTH OF THE YEAR.',
@@ -182,6 +192,8 @@ const T = {
     abDl:  [],
     abFlow: ['CONSULTATION', 'SITE MEETING (SURVEY)', 'FIRST ESTIMATE', 'REVISED ESTIMATE', 'CONTRACT', 'CONSTRUCTION'],
     abBig: 'THE SCHEDULE IS COUNTED BACKWARDS FROM OPENING DAY.',
+    rgL:   'REGIONS',
+    rgR:   'WE TRAVEL.<br>TELL US WHERE THE ROOM IS.',
     coL:   'CONTACT',
     coK:   ['TEL', 'MAIL', 'INSTAGRAM'],
     coR:   'TELL US THE SCALE<br>AND THE DATE.<br>THAT IS ENOUGH<br>FOR A FIRST ANSWER.',
@@ -191,7 +203,7 @@ const T = {
     frames: n => n + ' FRAMES'
   },
   ko: {
-    nav:   ['작업', '공사 진행과정', '문의'],
+    nav:   ['작업', '공사 진행과정', '시공지역', '문의'],
     idxHd: ['색인', '전체 프로젝트'],
     heroA: '10月 — 인테리어 디자인',
     heroB: '일 년 중 가장 좋은 계절, 10월.',
@@ -208,6 +220,8 @@ const T = {
     abDl:  [],
     abFlow: ['상담', '현장 미팅(실측)', '1차 견적', '2차 수정 견적', '계약', '착공'],
     abBig: '일정은 오픈 날짜에서 거꾸로 셉니다.',
+    rgL:   '시공지역',
+    rgR:   '지역을 가리지 않습니다.<br>현장이 어디인지 알려주세요.',
     coL:   '문의',
     coK:   ['전화', '이메일', '인스타그램'],
     coR:   '공사 규모와 일정만<br>알려주셔도 됩니다.<br>그거면 첫 답을<br>드릴 수 있습니다.',
