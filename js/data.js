@@ -1,17 +1,16 @@
 /* ══════════════════════════════════════════════════════════════
    SIWOL 10月 — 프로젝트 데이터 (EN / KO)
    출처: siwol-d/work.html의 PROJECTS 배열 (슬러그·이름·분류·지역·dims 그대로 승계)
-   ⚠️ 지역 표기: 갈마동=대전 · 체리주=경주만 확정. 대화 시리즈·도안동은 폴더명 기준 가안.
-   ⚠️ sgood: 기존 데이터는 (상업) BAR로 분류돼 있으나 사진은 바버숍("SPREAD GOOD VIBES")
-      — 임의 수정하지 않고 note로만 표시. 확정되면 cat 교체.
+   ⚠️ 지역 표기: 확정된 곳만 적고 나머지는 —.
+   ⚠️ 슬러그·이미지 폴더명은 업종 기준(상호 노출 금지, 8/30).
    본문은 사진에서 확인 가능한 것만 서술 — 면적·시공기간·연도 등 미확인 수치는 넣지 않음.
    문체: 프로젝트 설명=서술체(도록 캡션) / 스튜디오·컨택=습니다체(기존 시월 목소리 승계)
    ════════════════════════════════════════════════════════════════ */
 
 const PROJECTS = [
   {
-    slug: 'daehwa-garden', name: 'CHARCOAL GRILL HOUSE', ko: '숯불구이집',
-    cat: 'F&B', catKo: '(상업) F&B', loc: 'DAEJEON', locKo: '대전', cover: 2, skip: [6],
+    slug: 'charcoal-01', name: 'CHARCOAL GRILL HOUSE', ko: '숯불구이집',
+    cat: 'F&B', catKo: '(상업) F&B', loc: '—', locKo: '—', cover: 2, skip: [6],
     dims: [[1600,1545],[1600,1200],[1600,1200],[1600,1200],[1600,1200],[944,1600],[1600,1371],[1600,1199]],
     txt: [
       'A CHARCOAL GRILL HOUSE. THE ROOM IS KEPT DARK ON PURPOSE — THE FIRE IS THE ONLY THING ASKED TO BE BRIGHT.',
@@ -27,7 +26,7 @@ const PROJECTS = [
     ]
   },
   {
-    slug: 'daehwa-sanjang', name: 'CHARCOAL GRILL HOUSE', ko: '숯불구이집',
+    slug: 'charcoal-02', name: 'CHARCOAL GRILL HOUSE', ko: '숯불구이집',
     cat: 'F&B', catKo: '(상업) F&B', loc: 'GYEONGJU', locKo: '경주', cover: 7, skip: [],
     coverNote: ['EVERY TREE WAS CARVED BY HAND AND RAISED ONE BY ONE.', '하나하나 직접 깎아서 세운 나무.'],
     dims: [[1600,1200],[1600,1200],[1329,1600],[1600,1199],[1600,1200],[1600,1101],[1600,1200],[1600,1200],[1600,1244]],
@@ -43,7 +42,7 @@ const PROJECTS = [
     ]
   },
   {
-    slug: 'masta', name: 'IZAKAYA', ko: '이자카야',
+    slug: 'izakaya', name: 'IZAKAYA', ko: '이자카야',
     cat: 'BAR', catKo: '(상업) 바', loc: '—', locKo: '—', cover: 4, skip: [],
     dims: [[1600,1200],[1600,1200],[1600,1225],[1600,1200],[1600,1200],[1600,1200],[1600,1216]],
     txt: [
@@ -58,8 +57,8 @@ const PROJECTS = [
     ]
   },
   {
-    slug: 'daehwaro', name: 'CHARCOAL GRILL HOUSE', ko: '숯불구이집',
-    cat: 'F&B', catKo: '(상업) F&B', loc: 'DAEJEON', locKo: '대전', cover: 5, home: 4, skip: [],
+    slug: 'charcoal-03', name: 'CHARCOAL GRILL HOUSE', ko: '숯불구이집',
+    cat: 'F&B', catKo: '(상업) F&B', loc: '—', locKo: '—', cover: 5, home: 4, skip: [],
     dims: [[1600,1200],[1600,1200],[1600,888],[1600,1200],[1600,1200],[1600,1090],[1600,1200],[1600,1200]],
     txt: [
       'THE THIRD OF THREE ROOMS, AND THE COLDEST.',
@@ -75,9 +74,9 @@ const PROJECTS = [
     ]
   },
   {
-    slug: 'sgood', name: 'CAFE', ko: '카페',
-    /* heroWide: 대표컷을 텍스트 옆이 아니라 아래 가운데로, 가로로 넓게 (8/27 스굿바만)
-       8/28 시월 피드백: 대표컷 = 01(정면 간판 컷). 02는 꾸리쥬(살롱 의자) 사진이 섞여 들어온 것 → 제외.
+    slug: 'cafe', name: 'CAFE', ko: '카페',
+    /* heroWide: 대표컷을 텍스트 옆이 아니라 아래 가운데로, 가로로 넓게 (8/27 카페만)
+       8/28 시월 피드백: 대표컷 = 01(정면 간판 컷). 02는 살롱(07) 사진이 섞여 들어온 것 → 제외.
        05·10 = 01과 같은 정면 컷 → 제외. 남는 컷 11장. */
     cat: 'CAFE', catKo: '(상업) 카페', loc: '—', locKo: '—', cover: 1, heroWide: true, skip: [2, 5, 10],
     dims: [[1600,883],[1600,954],[1199,1600],[1199,1600],[1600,900],[1281,1600],[1280,1600],[1280,1600],[1448,1600],[1600,883],[1600,1200],[1600,1200],[1600,1200],[1600,1200]],
@@ -93,7 +92,7 @@ const PROJECTS = [
     ]
   },
   {
-    slug: 'cherry', name: 'LIQUOR SHOP', ko: '주류샵',
+    slug: 'liquor-shop', name: 'LIQUOR SHOP', ko: '주류샵',
     cat: 'SHOP', catKo: '(상업) 리테일', loc: 'GYEONGJU', locKo: '경주', cover: 5, skip: [],
     dims: [[1600,980],[1600,1541],[1189,1600],[1086,1600],[1552,1600],[1600,1200]],
     txt: [
@@ -110,7 +109,7 @@ const PROJECTS = [
     ]
   },
   {
-    slug: 'kuriju', name: 'HAIR SALON', ko: '헤어 살롱',
+    slug: 'hair-salon', name: 'HAIR SALON', ko: '헤어 살롱',
     cat: 'SALON', catKo: '(상업) 살롱', loc: '—', locKo: '—', cover: 2, skip: [],
     dims: [[1600,1066],[1600,1066],[1600,1066],[1065,1600],[1065,1600],[1600,1066],[1600,1200],[1600,1200],[1600,1200]],
     txt: [
@@ -127,26 +126,26 @@ const PROJECTS = [
     ]
   },
   {
-    slug: 'kingsman', name: 'RESTAURANT', ko: '일반음식점',
+    slug: 'restaurant', name: 'RESTAURANT', ko: '일반음식점',
     /* skip 근거: 원본에 같은 사진이 섞여 들어와 있다(md5 대조).
        02 = 08 = 16 (같은 컷 3장) → 08·16 제외 / 03 = 06 → 06 제외. 남는 컷 15장. */
     cat: 'F&B', catKo: '(상업) F&B', loc: '—', locKo: '—', cover: 2, skip: [6, 8, 16],
     dims: [[1600,1066],[1600,1199],[1600,1066],[1600,1199],[1600,1066],[1600,1066],[1600,1199],[1600,1199],[1600,848],[1600,1199],[1600,1199],[1600,1199],[1600,1199],[1600,1066],[1600,1199],[1600,1199],[1600,1199],[1199,1600]],
     txt: [
-      'A TAILOR-SHOP BAR. THE BACK WALL IS A ROW OF ARCHED, BACKLIT ALCOVES IN DARK TIMBER — THE SHAPE OF A FITTING ROOM, USED AS A BOTTLE DISPLAY.',
+      'A RESTAURANT BORROWED FROM A TAILOR SHOP. THE BACK WALL IS A ROW OF ARCHED, BACKLIT ALCOVES IN DARK TIMBER — THE SHAPE OF A FITTING ROOM, USED AS A BOTTLE DISPLAY.',
       'FLOOR IN SMALL CHECKERBOARD TILE. BANQUETTE IN GREEN BUTTON-TUFTED LEATHER. DAMASK PAPER ON THE SIDE WALL, DELIBERATELY ONE STEP TOO MUCH.',
       'THE COUNTER TOP IS BRUSHED STEEL, WHICH IS THE ONLY COLD MATERIAL IN THE ROOM AND THE ONLY ONE YOU TOUCH.',
       'BEFORE: A FLOOR PLATE WITH SPRINKLER MAIN AND DECK CEILING FULLY EXPOSED.'
     ],
     txtKo: [
-      '양복점을 빌려온 바. 뒷벽은 짙은 목재로 짠 아치형 진열구가 줄지어 서고 뒤에서 빛이 나온다. 피팅룸의 형태를 병 진열로 썼다.',
+      '양복점을 빌려온 음식점. 뒷벽은 짙은 목재로 짠 아치형 진열구가 줄지어 서고 뒤에서 빛이 나온다. 피팅룸의 형태를 병 진열로 썼다.',
       '바닥은 작은 체커보드 타일. 벤치는 초록 버튼 튀프팅 가죽. 측벽에는 다마스크 벽지, 일부러 한 단계 과하게 넣었다.',
       '카운터 상판은 헤어라인 스테인리스. 방에서 유일하게 차가운 재료이고, 유일하게 손이 닿는 재료다.',
       '이전 상태 — 스프링클러 배관과 데크 플레이트 천장이 전부 드러난 바닥판.'
     ]
   },
   {
-    slug: 'doan', name: 'CO-WORKING OFFICE', ko: '공유오피스',
+    slug: 'office', name: 'CO-WORKING OFFICE', ko: '공유오피스',
     cat: 'OFFICE', catKo: '(오피스)', loc: 'DAEJEON', locKo: '대전', cover: 2, skip: [],
     dims: [[1600,1200],[1600,901]],
     txt: [

@@ -390,7 +390,7 @@ main > #idx:first-child { padding-top: 16.6666vw; }
 .p1-note { display: block; padding-top: .69444vw; color: var(--dim); }
 .p1-ba-r figcaption { font-size: var(--fx); opacity: .35; padding-top: .69444vw; }
 
-/* 대표컷 가로 와이드 — 텍스트 옆이 아니라 아래 가운데 (data.js heroWide, 8/27 스굿바)
+/* 대표컷 가로 와이드 — 텍스트 옆이 아니라 아래 가운데 (data.js heroWide, 8/27 카페)
    좌우 여백을 같은 값으로 맞춰야 화면 가운데가 된다(기본 배치는 좌 14.58 / 우 6.25로 어긋나 있다) */
 .p1-ba.is-hw { display: block; padding-right: 14.5832vw; }
 .p1-ba.is-hw .p1-ba-r { width: 70.8328vw; margin: 8.33328vw auto 0; }

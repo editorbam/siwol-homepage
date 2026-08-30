@@ -718,7 +718,7 @@ function renderProject() {
   $('#p1-hero').innerHTML =
     `<span data-fade data-img><img src="${src(p, c)}" ${rs(p, c, heroVw)} alt="${nm(p)}" width="${dim(p, c)[0]}" height="${dim(p, c)[1]}"></span>` +
     `<figcaption>[${pad(c)}] ${bi(p.name, p.ko)}` +
-    /* coverNote — 대표컷 한 줄 설명(선택, data.js). 8/25 대화 산장부터 */
+    /* coverNote — 대표컷 한 줄 설명(선택, data.js). 8/25 02번부터 */
     (p.coverNote ? `<span class="p1-note">${bi(p.coverNote[0], p.coverNote[1])}</span>` : '') +
     `</figcaption>`;
 
